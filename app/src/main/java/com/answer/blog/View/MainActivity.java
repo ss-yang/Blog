@@ -1,5 +1,6 @@
-package com.answer.blog;
+package com.answer.blog.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,12 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.answer.blog.R;
 import com.answer.blog.Util.ArticleAdapter;
 import com.answer.blog.Util.ArticleManager;
 import com.answer.blog.Util.RecyclerItemClickListener;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private ArticleManager articleManager;
     private ArticleAdapter articleAdapter;
@@ -32,18 +34,6 @@ public class MainActivity extends AppCompatActivity
         initLayout();
         initArticleList();
 
-    }
-
-    @Override
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.fab:{
-                Toast.makeText(this,"功能开发中，敬请期待！",Toast.LENGTH_SHORT).show();
-                break;
-            }
-            default:
-                break;
-        }
     }
 
     @Override
@@ -105,7 +95,19 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.fab:{
+                        startActivity(new Intent(MainActivity.this,NewArticle.class));
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -131,6 +133,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(View view, int position) {
                         Toast.makeText(getApplication(), "single click:" + position, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this,ArticleDetail.class));
                     }
 
                     @Override
