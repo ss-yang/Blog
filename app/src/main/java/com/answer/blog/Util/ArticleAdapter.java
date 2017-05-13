@@ -18,10 +18,9 @@ import java.util.List;
  * Created by Answer on 2017/5/13.
  */
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> implements View.OnClickListener {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     private Context mContext;
     private List<Article> articleList;
-    private OnMyItemClickListener myItemClickListener;
 
     public ArticleAdapter(List<Article> articleList){
         this.articleList = articleList;
@@ -41,34 +40,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
     }
 
-    /**
-     * 自定义一个接口，实现RecycleView的点击事件
-     */
-    public static interface OnMyItemClickListener {
-        void onItemClick(View view , int position);
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent,int viewType){
         if(mContext == null){
             mContext = parent.getContext();
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.article_item,parent,false);
-        //在这里为每个item view添加点击事件
-        view.setOnClickListener(this);
         return new ViewHolder(view);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (myItemClickListener != null) {
-            //注意这里使用getTag方法获取position
-            myItemClickListener.onItemClick(v,(int)v.getTag());
-        }
-    }
-
-    public void setOnItemClickListener(OnMyItemClickListener listener) {
-        this.myItemClickListener = listener;
     }
 
     @Override

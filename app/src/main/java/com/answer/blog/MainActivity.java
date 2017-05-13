@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.answer.blog.Util.ArticleAdapter;
 import com.answer.blog.Util.ArticleManager;
+import com.answer.blog.Util.RecyclerItemClickListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
@@ -118,17 +119,24 @@ public class MainActivity extends AppCompatActivity
 
     public void initArticleList(){
         articleManager = new ArticleManager();
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycle_view_main);
+        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycle_view_main);
         articleAdapter = new ArticleAdapter(articleManager.getArticleList());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));//线性
 //        recyclerView.setLayoutManager(new GridLayoutManager(this,2));//宫格
 //        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));//瀑布流
         recyclerView.setAdapter(articleAdapter);
-        articleAdapter.setOnItemClickListener(new ArticleAdapter.OnMyItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this,"click" + articleManager.getArticleList().get(position).getTitle(),Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(getApplication(), "single click:" + position, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        Toast.makeText(getApplication(), "long click:" + position, Toast.LENGTH_SHORT).show();
+                    }
+                }));
     }
 }
