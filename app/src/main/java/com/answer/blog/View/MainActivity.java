@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.answer.blog.Data.Article;
 import com.answer.blog.R;
 import com.answer.blog.Util.ArticleAdapter;
 import com.answer.blog.Util.ArticleManager;
@@ -132,8 +133,10 @@ public class MainActivity extends AppCompatActivity
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(getApplication(), "single click:" + position, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this,ArticleDetail.class));
+                        Intent intent = new Intent(MainActivity.this,ArticleDetail.class);
+                        Article article = articleManager.getArticleList().get(position);
+                        intent.putExtra("article_data",article);
+                        startActivity(intent);
                     }
 
                     @Override

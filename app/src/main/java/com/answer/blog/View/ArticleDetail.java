@@ -1,8 +1,9 @@
 package com.answer.blog.View;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ public class ArticleDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
         initToolbar();
+        showArticle();
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -41,6 +44,9 @@ public class ArticleDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_article_detail);
         setSupportActionBar(toolbar);
@@ -49,5 +55,17 @@ public class ArticleDetail extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);//显示导航按钮（返回）
             actionBar.setDisplayShowTitleEnabled(false);
         }
+    }
+
+    /**
+     * 获取Activity传来的文章并显示
+     */
+    private void showArticle(){
+        article = (Article) getIntent().getParcelableExtra("article_data");
+        AppCompatTextView title = (AppCompatTextView)findViewById(R.id.title_detail);
+        AppCompatTextView content = (AppCompatTextView)findViewById(R.id.content_detail);
+        title.setText(article.getTitle());
+        content.setText(article.getContent());
+
     }
 }
