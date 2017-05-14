@@ -1,23 +1,29 @@
 package com.answer.blog.View;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.answer.blog.Data.Article;
 import com.answer.blog.R;
 
 public class NewArticle extends AppCompatActivity {
+    private TextInputEditText title;
+    private TextInputEditText content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_article);
         initToolbar();
+        title = (TextInputEditText)findViewById(R.id.new_title);
+        content = (TextInputEditText)findViewById(R.id.new_content);
     }
+
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.new_article,menu);
@@ -29,8 +35,9 @@ public class NewArticle extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.publish:{
-                Toast.makeText(this,"....",Toast.LENGTH_SHORT).show();
-
+                Article article = new Article(0,title.getText().toString(),"author",content.getText().toString(),"time","lasttime");
+                MainActivity.articleManager.add(article);
+                this.finish();
                 break;
             }
 

@@ -25,7 +25,7 @@ import com.answer.blog.Util.RecyclerItemClickListener;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    private ArticleManager articleManager;
+    public static ArticleManager articleManager;
     private ArticleAdapter articleAdapter;
 
     @Override
@@ -33,9 +33,19 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initLayout();
+        articleManager = new ArticleManager();
         initArticleList();
 
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Toast.makeText(this,"onStart",Toast.LENGTH_SHORT).show();
+        initArticleList();
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -121,7 +131,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void initArticleList(){
-        articleManager = new ArticleManager();
+
         final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycle_view_main);
         articleAdapter = new ArticleAdapter(articleManager.getArticleList());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));//线性

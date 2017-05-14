@@ -15,6 +15,7 @@ public class Article implements Parcelable{
     private String time;
     private String last_time;
 
+
     public Article(int id, String title, String author, String content, String time, String last_time) {
         this.id = id;
         this.title = title;
