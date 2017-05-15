@@ -12,10 +12,15 @@ import java.util.List;
 
 public class ArticleManager {
     private List<Article> articleList;
+    private List<Article> myArticle;
+    public static final int ALL_ARTICLE = 0;
+    public static final int MY_ARTICLE = 1;
 
     public ArticleManager() {
         articleList = new ArrayList<>();
         articleList.clear();
+        myArticle = new ArrayList<>();
+        myArticle.clear();
         initTest();
     }
 
@@ -31,6 +36,10 @@ public class ArticleManager {
         return articleList;
     }
 
+    public List<Article> getMyArticle() {
+        return myArticle;
+    }
+
     /**
      * 测试数据
      */
@@ -38,6 +47,8 @@ public class ArticleManager {
         int size = 10;
         for(int i=0;i<size;i++){
             Article article = new Article(i,"标题"+i,"作者"+i,"内容"+i,"时间"+i,"修改时间"+i);
+            if(i%2 == 0)
+                myArticle.add(article);
             articleList.add(article);
         }
     }

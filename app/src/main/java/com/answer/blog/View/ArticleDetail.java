@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ public class ArticleDetail extends AppCompatActivity {
         setContentView(R.layout.activity_article_detail);
         initToolbar();
         showArticle();
-
+        Log.d("TAG","onCreate");
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -31,15 +32,19 @@ public class ArticleDetail extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d("TAG","onBackPressed");
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
             case R.id.publish:{
                 Toast.makeText(this,"....",Toast.LENGTH_SHORT).show();
-
                 break;
             }
-
         }
         return super.onOptionsItemSelected(item);
     }
