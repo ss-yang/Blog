@@ -26,7 +26,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MainActivity" />
         </activity>
-        <activity android:name=".View.ArticleDetail">
+        <activity android:name=".View.ArticleDetail"
+            android:theme="@style/ArticleDetail">
             <!-- 在这里实现toolbar的返回 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

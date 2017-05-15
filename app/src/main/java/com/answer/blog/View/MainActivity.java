@@ -2,6 +2,7 @@ package com.answer.blog.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -21,9 +22,10 @@ import com.answer.blog.R;
 import com.answer.blog.Util.ArticleManager;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     public static ArticleManager articleManager;
+
 
     private TabLayout mTablayout;
     private ViewPager mViewpager;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         initLayout();
         articleManager = new ArticleManager();
         initView();
@@ -94,9 +98,13 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+
     public void initLayout(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_tool_bar_main);
         setSupportActionBar(toolbar);
+        toolbarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +129,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     private void initView() {

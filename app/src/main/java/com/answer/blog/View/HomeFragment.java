@@ -3,6 +3,7 @@ package com.answer.blog.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,21 +22,60 @@ import com.answer.blog.Util.RecyclerItemClickListener;
  * Created by Answer on 2017/5/15.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
     private ArticleAdapter articleAdapter;
     private ArticleManager articleManager;
-
+    private SwipeRefreshLayout refreshLayout;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_main,container,false);
+        view = inflater.inflate(R.layout.content_main,container,false);
+        initLayout(view);
         initArticleList(view);
         return view;
     }
 
-    public void initArticleList(View view){
+    @Override
+    public void onStart() {
+        super.onStart();
+        initArticleList(view);
+    }
 
+    @Override
+    public void onRefresh() {
+        //refresh here
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(3000);
+                    // 网络请求
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //reload
+                        //TODO: init data
+                        // .....
+                        articleAdapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void initLayout(View view){
+        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
+        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        refreshLayout.setOnRefreshListener(this);
+    }
+
+    public void initArticleList(View view){
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycle_view_main);
         articleManager = MainActivity.articleManager;
         articleAdapter = new ArticleAdapter(articleManager.getArticleList());
