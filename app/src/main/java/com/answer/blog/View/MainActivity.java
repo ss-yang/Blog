@@ -14,10 +14,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.answer.blog.Data.User;
 import com.answer.blog.R;
 import com.answer.blog.Util.ArticleManager;
 
@@ -25,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static ArticleManager articleManager;
+    public static User user;
 
 
     private TabLayout mTablayout;
@@ -35,12 +43,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         initLayout();
         articleManager = new ArticleManager();
-        initView();
-
+        initTabView();
+        user = new User();
+        showUser(user);
 
     }
 
@@ -133,7 +140,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void initView() {
+    private void initTabView() {
         mTablayout = (TabLayout) findViewById(R.id.tablayout);
         mViewpager = (ViewPager) findViewById(R.id.viewpager);
 
@@ -160,6 +167,47 @@ public class MainActivity extends AppCompatActivity
         });
 
         mTablayout.setupWithViewPager(mViewpager);
+    }
+
+    private void showUser(final User user){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView tv_login_quit = (TextView)headerView.findViewById(R.id.tv_login_quit);
+        String login_quit = "登录";
+        if(user.isLogin()){
+            login_quit = "退出登录";
+        }
+        SpannableString spannableString = new SpannableString(login_quit);
+        if(!user.isLogin()){
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View view) {
+//                    Intent intent=new Intent(MainActivity.this,Login.class);
+//                    startActivity(intent);
+                }
+
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
+                }
+            }, 0, login_quit.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }else {
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View view) {
+                    //退出登录的逻辑
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
+                }
+            }, 0, login_quit.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        tv_login_quit.setText(spannableString);
+        tv_login_quit.setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 
 }
