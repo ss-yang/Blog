@@ -23,8 +23,6 @@
     <string name="error_incorrect_password">密码不正确！</string>
     <string name="error_field_required">账号不能为空！</string>
 
-    <!--php server url-->
-    <string name="url_home">http://192.168.5.148:8080/Blog/api/article_list.php</string>
-    <string name="url_login">http://192.168.5.148:8080/Blog/api/login.php</string>
+
 
 </resources>

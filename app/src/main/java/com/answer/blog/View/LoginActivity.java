@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.answer.blog.Data.BlogConstant;
 import com.answer.blog.R;
 import com.answer.blog.Util.HttpUtil.HttpPostUtil;
 
@@ -155,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         private boolean loginServer() {
             Log.d("TAG","front loginServer");
-            HttpPostUtil.loginPost(userId, password, getString(R.string.url_login), new HttpPostUtil.VolleyCallback() {
+            HttpPostUtil.loginPost(userId, password, BlogConstant.urlLogin, new HttpPostUtil.VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject result) {
                     try {

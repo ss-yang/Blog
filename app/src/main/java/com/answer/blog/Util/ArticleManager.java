@@ -1,11 +1,6 @@
 package com.answer.blog.Util;
 
-import android.os.AsyncTask;
-
 import com.answer.blog.Data.Article;
-import com.answer.blog.Util.HttpUtil.HttpJsonRequest;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,19 +53,6 @@ public class ArticleManager {
         }
     }
 
-    public static class GetServerArticleTask  extends AsyncTask<String,Void,JSONObject> {
-        public GetServerArticleTask(){}
 
-        @Override
-        protected JSONObject doInBackground(String... params) {
-            HttpJsonRequest.jsonRequest(params[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject articleList) {
-            super.onPostExecute(articleList);
-        }
-    }
 
 }

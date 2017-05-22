@@ -23,15 +23,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.answer.blog.Data.User;
 import com.answer.blog.R;
 import com.answer.blog.Util.ArticleManager;
+import com.answer.blog.Util.Implement.DataTransfer;
+import com.answer.blog.Util.HttpUtil.DataRequester;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,DataTransfer {
 
     public static ArticleManager articleManager;
     public static User user;
@@ -49,14 +52,19 @@ public class MainActivity extends AppCompatActivity
         mQueue = Volley.newRequestQueue(getBaseContext());
         initLayout();
         articleManager = new ArticleManager();
-        ArticleManager.GetServerArticleTask getServerArticle;
-        getServerArticle = new ArticleManager.GetServerArticleTask();
-        getServerArticle.execute(getString(R.string.url_home));
         initTabView();
         user = new User();
         showUser(user);
-
+        DataRequester requester=new DataRequester(this);
+        requester.requestArticleList();
     }
+
+    @Override
+    public void setView(String str){
+        // 测试：在activity获取onResponse的数据。（实现了一个自定义接口）
+        Toast.makeText(MainActivity.this,str,Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     protected void onResume() {
