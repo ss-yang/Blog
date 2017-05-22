@@ -69,6 +69,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }).start();
     }
 
+
+
     private void initLayout(View view){
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
         refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));

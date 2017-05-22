@@ -14,4 +14,17 @@
     <string name="share">分享</string>
     <string name="about">关于</string>
 
+    <!--login-->
+    <string name="prompt_userId">账号</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录 or 注册</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_password">密码太简单了！</string>
+    <string name="error_incorrect_password">密码不正确！</string>
+    <string name="error_field_required">账号不能为空！</string>
+
+    <!--php server url-->
+    <string name="url_home">http://192.168.5.148:8080/Blog/api/article_list.php</string>
+    <string name="url_login">http://192.168.5.148:8080/Blog/api/login.php</string>
+
 </resources>

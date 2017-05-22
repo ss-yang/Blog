@@ -24,6 +24,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.answer.blog.Data.User;
 import com.answer.blog.R;
 import com.answer.blog.Util.ArticleManager;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     public static ArticleManager articleManager;
     public static User user;
 
+    public static RequestQueue mQueue;
 
     private TabLayout mTablayout;
     private ViewPager mViewpager;
@@ -43,12 +46,31 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mQueue = Volley.newRequestQueue(getBaseContext());
         initLayout();
         articleManager = new ArticleManager();
+        ArticleManager.GetServerArticleTask getServerArticle;
+        getServerArticle = new ArticleManager.GetServerArticleTask();
+        getServerArticle.execute(getString(R.string.url_home));
         initTabView();
         user = new User();
         showUser(user);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showUser(user);
+
+    }
+
+    @Override
+    protected void onActivityResult( int requestCode, int resultCode, Intent intent ){
+        if(resultCode == RESULT_OK){
+            user.setId(intent.getStringExtra("userId"));
+            user.setLogin(true);
+        }
     }
 
     @Override
@@ -104,8 +126,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 
     public void initLayout(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -169,10 +189,11 @@ public class MainActivity extends AppCompatActivity
         mTablayout.setupWithViewPager(mViewpager);
     }
 
-    private void showUser(final User user){
+    private void showUser(User user){
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView tv_login_quit = (TextView)headerView.findViewById(R.id.tv_login_quit);
+        TextView tv_nickName = (TextView)headerView.findViewById(R.id.tv_nickname);
         String login_quit = "登录";
         if(user.isLogin()){
             login_quit = "退出登录";
@@ -182,8 +203,9 @@ public class MainActivity extends AppCompatActivity
             spannableString.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent=new Intent(MainActivity.this,Login.class);
+                    Intent intent=new Intent(MainActivity.this,LoginActivity.class);
 //                    startActivity(intent);
+                    startActivityForResult(intent,0);
                 }
 
                 @Override
@@ -207,7 +229,7 @@ public class MainActivity extends AppCompatActivity
         }
         tv_login_quit.setText(spannableString);
         tv_login_quit.setMovementMethod(LinkMovementMethod.getInstance());
-
+        tv_nickName.setText(user.getId());
     }
 
 }
