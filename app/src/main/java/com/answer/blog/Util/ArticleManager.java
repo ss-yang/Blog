@@ -1,6 +1,6 @@
-package com.answer.blog.Util;
+package com.answer.blog.util;
 
-import com.answer.blog.Data.Article;
+import com.answer.blog.data.Article;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,13 +1,13 @@
-package com.answer.blog.Util.HttpUtil;
+package com.answer.blog.util.httpUtil;
 
 import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.answer.blog.Data.BlogConstant;
-import com.answer.blog.View.MainActivity;
-import com.answer.blog.Util.Implement.DataTransfer;
+import com.answer.blog.data.BlogConstant;
+import com.answer.blog.view.MainActivity;
+import com.answer.blog.util.implement.DataTransfer;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.answer.blog.View;
+package com.answer.blog.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,9 +15,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.answer.blog.Data.BlogConstant;
+import com.answer.blog.data.BlogConstant;
 import com.answer.blog.R;
-import com.answer.blog.Util.HttpUtil.HttpPostUtil;
+import com.answer.blog.util.httpUtil.HttpPostUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.answer.blog.Util;
+package com.answer.blog.util;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.answer.blog.Data.Article;
+import com.answer.blog.data.Article;
 import com.answer.blog.R;
 
 import java.util.List;

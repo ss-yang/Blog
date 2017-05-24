@@ -1,4 +1,4 @@
-package com.answer.blog.Util.Implement;
+package com.answer.blog.util.implement;
 
 /**
  * Created by Answer on 2017/5/22.

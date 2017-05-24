@@ -1,4 +1,4 @@
-package com.answer.blog.Data;
+package com.answer.blog.data;
 
 /**
  * Created by Answer on 2017/5/16.

@@ -1,4 +1,4 @@
-package com.answer.blog.Util.HttpUtil;
+package com.answer.blog.util.httpUtil;
 
 import android.util.Log;
 
@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.answer.blog.View.MainActivity;
+import com.answer.blog.view.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

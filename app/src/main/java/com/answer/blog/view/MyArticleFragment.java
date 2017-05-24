@@ -1,4 +1,4 @@
-package com.answer.blog.View;
+package com.answer.blog.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.answer.blog.Data.Article;
+import com.answer.blog.data.Article;
 import com.answer.blog.R;
-import com.answer.blog.Util.ArticleAdapter;
-import com.answer.blog.Util.ArticleManager;
-import com.answer.blog.Util.BaseFragment;
-import com.answer.blog.Util.RecyclerItemClickListener;
+import com.answer.blog.util.ArticleAdapter;
+import com.answer.blog.util.ArticleManager;
+import com.answer.blog.util.BaseFragment;
+import com.answer.blog.util.RecyclerItemClickListener;
 
 /**
  * Created by Answer on 2017/5/15.

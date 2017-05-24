@@ -1,4 +1,4 @@
-package com.answer.blog.Data;
+package com.answer.blog.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

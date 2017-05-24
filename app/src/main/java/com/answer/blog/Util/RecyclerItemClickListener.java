@@ -1,4 +1,4 @@
-package com.answer.blog.Util;
+package com.answer.blog.util;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

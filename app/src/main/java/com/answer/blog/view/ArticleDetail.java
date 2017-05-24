@@ -1,4 +1,4 @@
-package com.answer.blog.View;
+package com.answer.blog.view;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.answer.blog.Data.Article;
+import com.answer.blog.data.Article;
 import com.answer.blog.R;
 
 public class ArticleDetail extends AppCompatActivity {

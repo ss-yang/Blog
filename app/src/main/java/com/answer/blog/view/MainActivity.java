@@ -1,4 +1,4 @@
-package com.answer.blog.View;
+package com.answer.blog.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,11 +27,11 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.answer.blog.Data.User;
+import com.answer.blog.data.User;
 import com.answer.blog.R;
-import com.answer.blog.Util.ArticleManager;
-import com.answer.blog.Util.Implement.DataTransfer;
-import com.answer.blog.Util.HttpUtil.DataRequester;
+import com.answer.blog.util.ArticleManager;
+import com.answer.blog.util.implement.DataTransfer;
+import com.answer.blog.util.httpUtil.DataRequester;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DataTransfer {

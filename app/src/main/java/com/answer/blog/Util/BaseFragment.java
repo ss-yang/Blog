@@ -1,4 +1,4 @@
-package com.answer.blog.Util;
+package com.answer.blog.util;
 
 import android.support.v4.app.Fragment;
 import android.view.View;
