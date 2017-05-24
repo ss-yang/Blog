@@ -23,15 +23,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.answer.blog.data.User;
 import com.answer.blog.R;
+import com.answer.blog.data.User;
 import com.answer.blog.util.ArticleManager;
-import com.answer.blog.util.implement.DataTransfer;
 import com.answer.blog.util.httpUtil.DataRequester;
+import com.answer.blog.util.implement.DataTransfer;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DataTransfer {
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void setView(String str){
         // 测试：在activity获取onResponse的数据。（实现了一个自定义接口）
-        Toast.makeText(MainActivity.this,str,Toast.LENGTH_LONG).show();
+//        Toast.makeText(MainActivity.this,str,Toast.LENGTH_LONG).show();
     }
 
 

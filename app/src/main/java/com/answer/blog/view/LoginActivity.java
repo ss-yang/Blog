@@ -3,20 +3,17 @@ package com.answer.blog.view;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.answer.blog.data.BlogConstant;
 import com.answer.blog.R;
+import com.answer.blog.data.BlogConstant;
 import com.answer.blog.util.httpUtil.HttpPostUtil;
 
 import org.json.JSONException;
@@ -33,7 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private View mLoginFormView;
     private Button mSignIn;
 
-    private UserLoginTask mAuthTask = null;
+//    private UserLoginTask mAuthTask = null;
 
     private boolean loginSuccess;
 
@@ -59,17 +56,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
-
         // Reset errors.
         mUserIdView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String userId= mUserIdView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        userId= mUserIdView.getText().toString();
+        password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -96,9 +89,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(userId, password);
-            mAuthTask.execute((Void) null);
+            loginServer();
         }
+    }
+
+    private void loginServer() {
+        HttpPostUtil.loginPost(userId, password, BlogConstant.urlLogin, new HttpPostUtil.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                try {
+                    if (result.get("code").toString().equals("200")) {
+                        MainActivity.user.setId(userId);
+                        setUser(result.get("data").toString());
+                        finish();
+                    }else {
+                        mPasswordView.setError(result.get("message").toString());
+                        showProgress(false);
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     /**
@@ -144,71 +157,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private class UserLoginTask extends AsyncTask<Void,Void,Boolean> {
-        private String userId;
-        private String password;
-
-
-        public UserLoginTask(String userId, String password) {
-            this.userId = userId;
-            this.password = password;
-        }
-
-        private boolean loginServer() {
-            Log.d("TAG","front loginServer");
-            HttpPostUtil.loginPost(userId, password, BlogConstant.urlLogin, new HttpPostUtil.VolleyCallback() {
-                @Override
-                public void onSuccess(JSONObject result) {
-                    try {
-                        if (result.get("code").toString().equals("200")) {
-                            loginSuccess = true;
-                            Log.d("TAG","onSuccess loginSuccess:"+loginSuccess);
-                        }
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            Log.d("TAG","end loginServer");
-            return loginSuccess;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            boolean success;
-            try {
-                // Simulate network access.
-                Thread.sleep(3000);
-                success = loginServer();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                return false;
-            }
-
-            // register the new account here.
-            // ......
-            Log.d("TAG", "doInBackground :" + success);
-            return success;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            mAuthTask = null;
-            showProgress(false);
-
-            Log.d("TAG", "onPostExecute aBoolean:" + aBoolean.toString());
-            if (aBoolean) {
-                Intent intent = new Intent();
-                intent.putExtra("userId", userId);
-                setResult(RESULT_OK, intent);
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
+    /**
+     * 通过response的data信息获取用户基本信息并set
+     */
+    private void setUser(String data){
 
     }
 
