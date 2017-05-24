@@ -3,6 +3,7 @@ package com.answer.blog.util.httpUtil;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -53,6 +54,19 @@ public class HttpPostUtil {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("Content-Type","application/x-www.form-urlencoded");
                 return params;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                for (String s : response.headers.keySet()) {
+                    if (s.contains("Set-Cookie")) {
+                        String mCookie = response.headers.get(s);
+                        Log.d("TAG",mCookie);
+                        MainActivity.user.setCookieId(mCookie);
+                        break;
+                    }
+                }
+                return super.parseNetworkResponse(response);
             }
         };
         MainActivity.mQueue.add(stringRequest);

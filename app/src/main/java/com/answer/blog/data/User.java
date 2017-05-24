@@ -12,18 +12,19 @@ public class User {
     private String qq;
     private String email;
     private String regTime;
-    private String sessionID;
-    private boolean isLogin;
+    private String cookieId;
+    private boolean login;
 
-    public User(){
+
+    public void setDefult(){
         this.id = "";
         this.nickname = "游客";
         this.intro = "";
         this.qq = "";
         this.email = "";
         this.regTime = "";
-        this.sessionID = "";
-        this.isLogin = false;
+        this.cookieId = "";
+        this.login = false;
     }
 
     public String getId() {
@@ -74,19 +75,19 @@ public class User {
         this.regTime = regTime;
     }
 
-    public String getSessionID() {
-        return sessionID;
+    public String getCookieId() {
+        return cookieId;
     }
 
-    public void setSessionID(String sessionID) {
-        this.sessionID = sessionID;
+    public void setCookieId(String cookieId) {
+        this.cookieId = cookieId;
     }
 
     public boolean isLogin() {
-        return isLogin;
+        return login;
     }
 
     public void setLogin(boolean login) {
-        isLogin = login;
+        this.login = login;
     }
 }

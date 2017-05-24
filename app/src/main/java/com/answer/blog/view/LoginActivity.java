@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.answer.blog.R;
-import com.answer.blog.data.BlogConstant;
+import com.answer.blog.BlogConst;
 import com.answer.blog.util.httpUtil.HttpPostUtil;
 
 import org.json.JSONException;
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginServer() {
-        HttpPostUtil.loginPost(userId, password, BlogConstant.urlLogin, new HttpPostUtil.VolleyCallback() {
+        HttpPostUtil.loginPost(userId, password, BlogConst.urlLogin, new HttpPostUtil.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject result) {
                 try {

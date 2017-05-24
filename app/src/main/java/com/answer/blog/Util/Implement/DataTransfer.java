@@ -5,5 +5,5 @@ package com.answer.blog.util.implement;
  */
 
 public interface DataTransfer {
-    public void setView(String str);
+    void setView(String str);
 }
