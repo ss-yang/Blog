@@ -9,14 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.answer.blog.data.Article;
 import com.answer.blog.R;
+import com.answer.blog.data.bean.EntityArticle;
 import com.answer.blog.util.ArticleAdapter;
 import com.answer.blog.util.ArticleManager;
 import com.answer.blog.util.BaseFragment;
 import com.answer.blog.util.RecyclerItemClickListener;
+import com.answer.blog.util.httpUtil.DataRequester;
 
 /**
  * Created by Answer on 2017/5/15.
@@ -26,6 +26,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private ArticleAdapter articleAdapter;
     private ArticleManager articleManager;
     private SwipeRefreshLayout refreshLayout;
+    private RecyclerView recyclerView;
     private View view;
 
     @Nullable
@@ -44,14 +45,22 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initArticleList(view);
+    }
+
+    @Override
     public void onRefresh() {
         //refresh here
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                     // 网络请求
+                    DataRequester.requestArticleList();
+
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
@@ -59,8 +68,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     @Override
                     public void run() {
                         //reload
-                        //TODO: init data
-                        // .....
+                        initArticleList(view);
                         articleAdapter.notifyDataSetChanged();
                         refreshLayout.setRefreshing(false);
                     }
@@ -78,7 +86,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     public void initArticleList(View view){
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycle_view_main);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycle_view_main);
         articleManager = MainActivity.articleManager;
         articleAdapter = new ArticleAdapter(articleManager.getArticleList());
 
@@ -92,14 +100,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent intent = new Intent(getActivity(),ArticleDetail.class);
-                        Article article = articleManager.getArticleList().get(position);
+                        EntityArticle.ArticleBean article = articleManager.getArticleList().get(position);
                         intent.putExtra("article_data",article);
                         startActivity(intent);
                     }
 
                     @Override
                     public void onItemLongClick(View view, int position) {
-                        Toast.makeText(getActivity(), "long click:" + position, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "long click:" + position, Toast.LENGTH_SHORT).show();
                     }
                 }));
     }

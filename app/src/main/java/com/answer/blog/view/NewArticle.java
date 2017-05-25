@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.answer.blog.data.Article;
 import com.answer.blog.R;
+import com.answer.blog.data.bean.EntityArticle;
 
 public class NewArticle extends AppCompatActivity {
     private TextInputEditText title;
@@ -35,7 +36,7 @@ public class NewArticle extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.publish:{
-                Article article = new Article(0,title.getText().toString(),"author",content.getText().toString(),"time","lasttime");
+                EntityArticle.ArticleBean article = new EntityArticle.ArticleBean();// some info
                 MainActivity.articleManager.add(article);
                 this.finish();
                 break;

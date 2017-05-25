@@ -6,8 +6,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.answer.blog.BlogConst;
+import com.answer.blog.data.bean.EntityArticle;
 import com.answer.blog.view.MainActivity;
-import com.answer.blog.util.implement.DataTransfer;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -16,30 +17,27 @@ import org.json.JSONObject;
  */
 
 public class DataRequester {
-    private DataTransfer dataTransfer;
-    public DataRequester(DataTransfer dataTransfer){
-        this.dataTransfer = dataTransfer;
-    }
 
+    public DataRequester(){}
 
-    public void requestArticleList(){
+    public static void requestArticleList(){
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(BlogConst.urlHome, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("TAG","onResponse -> "+response.toString());
 
-
-
-
-
-                dataTransfer.setView(response.toString());
+                EntityArticle entityArticle;
+                Gson gson = new Gson();
+                entityArticle = gson.fromJson(response.toString(), EntityArticle.class);
+                MainActivity.articleManager.setArticleList(entityArticle.getArticles());
 
             }},
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("TAG","error -> "+error.getMessage());
+                        //Toast.makeText(,"网络请求失败。",Toast.LENGTH_SHORT).show();
                     }
                 }
         );

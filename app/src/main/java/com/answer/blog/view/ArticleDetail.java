@@ -8,14 +8,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.answer.blog.data.Article;
 import com.answer.blog.R;
+import com.answer.blog.data.bean.EntityArticle;
 
 public class ArticleDetail extends AppCompatActivity {
 
-    Article article;
+    EntityArticle.ArticleBean article;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class ArticleDetail extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Log.d("TAG","onBackPressed");
+        finish();
     }
 
     @Override
@@ -42,7 +46,7 @@ public class ArticleDetail extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.publish:{
-                Toast.makeText(this,"....",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"developing....",Toast.LENGTH_SHORT).show();
                 break;
             }
         }
@@ -53,7 +57,7 @@ public class ArticleDetail extends AppCompatActivity {
      * 初始化Toolbar
      */
     private void initToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_article_detail);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_article_detail);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -66,11 +70,11 @@ public class ArticleDetail extends AppCompatActivity {
      * 获取Activity传来的文章并显示
      */
     private void showArticle(){
-        article = (Article) getIntent().getParcelableExtra("article_data");
-        AppCompatTextView title = (AppCompatTextView)findViewById(R.id.title_detail);
         AppCompatTextView content = (AppCompatTextView)findViewById(R.id.content_detail);
-        title.setText(article.getTitle());
+        ImageView img = (ImageView)findViewById(R.id.app_bar_image);//标题背景的图片
+        article =  getIntent().getParcelableExtra("article_data");
         content.setText(article.getContent());
-
+        toolbar.setTitle(article.getTitle());
+        toolbar.setSubtitle(article.getAuthor()+"  "+article.getTime());
     }
 }

@@ -1,6 +1,7 @@
 package com.answer.blog.util;
 
 import com.answer.blog.data.Article;
+import com.answer.blog.data.bean.EntityArticle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,8 @@ import java.util.List;
  */
 
 public class ArticleManager {
-    private List<Article> articleList;
-    private List<Article> myArticle;
+    private List<EntityArticle.ArticleBean> articleList;
+    private List<EntityArticle.ArticleBean> myArticle;
     public static final int ALL_ARTICLE = 0;
     public static final int MY_ARTICLE = 1;
 
@@ -21,10 +22,10 @@ public class ArticleManager {
         articleList.clear();
         myArticle = new ArrayList<>();
         myArticle.clear();
-        initTest();
+//        initTest();
     }
 
-    public void add(Article article){
+    public void add(EntityArticle.ArticleBean article){
         articleList.add(article);
     }
 
@@ -32,11 +33,15 @@ public class ArticleManager {
         articleList.remove(id);
     }
 
-    public List<Article> getArticleList() {
+    public List<EntityArticle.ArticleBean> getArticleList() {
         return articleList;
     }
 
-    public List<Article> getMyArticle() {
+    public void setArticleList(List<EntityArticle.ArticleBean> articleList) {
+        this.articleList = articleList;
+    }
+
+    public List<EntityArticle.ArticleBean> getMyArticle() {
         return myArticle;
     }
 
@@ -47,9 +52,9 @@ public class ArticleManager {
         int size = 10;
         for(int i=0;i<size;i++){
             Article article = new Article(i,"标题"+i,"作者"+i,"内容"+i,"时间"+i,"修改时间"+i);
-            if(i%2 == 0)
-                myArticle.add(article);
-            articleList.add(article);
+//            if(i%2 == 0)
+//                myArticle.add(article);
+//            articleList.add(article);
         }
     }
 

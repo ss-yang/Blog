@@ -8,10 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.answer.blog.data.Article;
 import com.answer.blog.R;
+import com.answer.blog.data.bean.EntityArticle;
 import com.answer.blog.util.ArticleAdapter;
 import com.answer.blog.util.ArticleManager;
 import com.answer.blog.util.BaseFragment;
@@ -49,14 +48,14 @@ public class MyArticleFragment extends BaseFragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent intent = new Intent(getActivity(),ArticleDetail.class);
-                        Article article = articleManager.getMyArticle().get(position);
+                        EntityArticle.ArticleBean article = articleManager.getMyArticle().get(position);
                         intent.putExtra("article_data",article);
                         startActivity(intent);
                     }
 
                     @Override
                     public void onItemLongClick(View view, int position) {
-                        Toast.makeText(getActivity(), "long click:" + position, Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getActivity(), "long click:" + position, Toast.LENGTH_SHORT).show();
                     }
                 }));
     }

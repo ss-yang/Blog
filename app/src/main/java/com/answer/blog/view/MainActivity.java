@@ -31,10 +31,9 @@ import com.answer.blog.R;
 import com.answer.blog.data.User;
 import com.answer.blog.util.ArticleManager;
 import com.answer.blog.util.httpUtil.DataRequester;
-import com.answer.blog.util.implement.DataTransfer;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,DataTransfer {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     public static ArticleManager articleManager;
     public static User user;
@@ -61,18 +60,12 @@ public class MainActivity extends AppCompatActivity
         articleManager = new ArticleManager();
         user = new User();
         user.setDefult();
-        DataRequester requester=new DataRequester(this);
+        DataRequester requester=new DataRequester();
         requester.requestArticleList();
 
         initLayout();
-        initTabView();
         initUserView();
-    }
-
-    @Override
-    public void setView(String str){
-        // 测试：在activity获取onResponse的数据。（实现了一个自定义接口）
-//        Toast.makeText(MainActivity.this,str,Toast.LENGTH_LONG).show();
+        initTabView();
     }
 
 
@@ -80,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         initUserView();
+        initTabView();
 
     }
 

@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.answer.blog.data.Article;
 import com.answer.blog.R;
+import com.answer.blog.data.bean.EntityArticle;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import java.util.List;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     private Context mContext;
-    private List<Article> articleList;
+    private List<EntityArticle.ArticleBean> articleList;
 
-    public ArticleAdapter(List<Article> articleList){
+    public ArticleAdapter(List<EntityArticle.ArticleBean> articleList){
         this.articleList = articleList;
     }
 
@@ -51,7 +51,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
-        Article article = articleList.get(position);
+        EntityArticle.ArticleBean article = articleList.get(position);
         holder.title.setText(article.getTitle());
         holder.author.setText(article.getAuthor());
         holder.date.setText(article.getTime());

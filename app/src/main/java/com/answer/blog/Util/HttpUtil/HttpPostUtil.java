@@ -22,6 +22,10 @@ import java.util.Map;
 
 public class HttpPostUtil {
 
+    public interface VolleyCallback{
+        void onSuccess(JSONObject result);
+    }
+
     public static void loginPost(final String userId, final String password, String url, final VolleyCallback callback){
         StringRequest stringRequest= new StringRequest(Request.Method.POST,url,
                 new Response.Listener<String>() {
@@ -70,8 +74,5 @@ public class HttpPostUtil {
             }
         };
         MainActivity.mQueue.add(stringRequest);
-    }
-    public interface VolleyCallback{
-        void onSuccess(JSONObject result);
     }
 }
