@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardElevation="8dp"
+    app:cardElevation="5dp"
     app:cardCornerRadius="@dimen/cardview_default_radius">
 
     <LinearLayout
@@ -30,8 +30,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="标题"
-                android:textSize="21sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_author"
@@ -41,8 +40,7 @@
                 android:layout_below="@+id/tv_title"
                 android:layout_marginRight="@dimen/cardview_default_radius"
                 android:layout_toLeftOf="@+id/tv_date"
-                android:gravity="bottom"
-                android:text="作者:admin" />
+                android:gravity="bottom" />
 
             <TextView
                 android:id="@+id/tv_date"
@@ -51,8 +49,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/tv_title"
-                android:gravity="bottom"
-                android:text="发布日期:2011-1-1" />
+                android:gravity="bottom" />
 
 
         </RelativeLayout>
