@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginServer() {
-        HttpPostUtil.loginPost(userId, password, BlogConst.urlLogin, new HttpPostUtil.VolleyCallback() {
+        HttpPostUtil.loginPost(userId, password, BlogConst.url_login, new HttpPostUtil.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject result) {
                 try {

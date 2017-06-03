@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.answer.blog.data.Article;
 import com.answer.blog.R;
 import com.answer.blog.data.bean.EntityArticle;
 

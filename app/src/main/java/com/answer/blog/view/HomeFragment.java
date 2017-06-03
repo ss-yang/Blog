@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         view = inflater.inflate(R.layout.content_main,container,false);
         initLayout(view);
         initArticleList(view);
+        Log.d("TAG","HomeFragment onCreate");
         return view;
     }
 
@@ -42,16 +44,19 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onStart() {
         super.onStart();
         initArticleList(view);
+        Log.d("TAG","HomeFragment onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
         initArticleList(view);
+        Log.d("TAG","HomeFragment onResume");
     }
 
     @Override
     public void onRefresh() {
+        Log.d("TAG","home onfresh");
         //refresh here
         new Thread(new Runnable() {
             @Override
