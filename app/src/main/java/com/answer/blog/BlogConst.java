@@ -9,4 +9,5 @@ public class BlogConst {
     public static String url_home = ROOT_URL+"/Blog/api/article_list.php";
     public static String url_login = ROOT_URL+"/Blog/api/login.php";
     public static String url_my_article = ROOT_URL+"/Blog/api/myarticle_list.php";
+    public static String url_new_article = ROOT_URL+"/Blog/api/add_article.php";
 }

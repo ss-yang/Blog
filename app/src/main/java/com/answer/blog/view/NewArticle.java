@@ -5,11 +5,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.answer.blog.R;
-import com.answer.blog.data.bean.EntityArticle;
+import com.answer.blog.util.httpUtil.HttpPostUtil;
 
 public class NewArticle extends AppCompatActivity {
     private TextInputEditText title;
@@ -35,8 +36,7 @@ public class NewArticle extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.publish:{
-                EntityArticle.ArticleBean article = new EntityArticle.ArticleBean();// some info
-                MainActivity.articleManager.add(article);
+                HttpPostUtil.newArticle(title.getText().toString(), content.getText().toString());
                 this.finish();
                 break;
             }

@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.answer.blog.BlogConst;
 import com.answer.blog.view.MainActivity;
 
 import org.json.JSONException;
@@ -71,6 +72,43 @@ public class HttpPostUtil {
                     }
                 }
                 return super.parseNetworkResponse(response);
+            }
+        };
+        MainActivity.mQueue.add(stringRequest);
+    }
+
+    public static void newArticle(final String title, final String content){
+        StringRequest stringRequest= new StringRequest(Request.Method.POST, BlogConst.url_new_article,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        Log.d("TAG","response:"+s);
+                        try{
+                            JSONObject jsonObject = new JSONObject(s);
+                        }catch (JSONException e){
+                            Log.d("TAG",e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", "error -> "+error.getMessage(), error);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("title", title);
+                params.put("editcontent", content);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www.form-urlencoded");
+                params.put("Cookie", MainActivity.user.getCookieId());
+                return params;
             }
         };
         MainActivity.mQueue.add(stringRequest);
