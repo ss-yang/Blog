@@ -5,6 +5,7 @@ package com.answer.blog;
  */
 
 public class BlogConst {
-    public static String urlHome = "http://192.168.5.148:8080/Blog/api/article_list.php";
-    public static String urlLogin = "http://192.168.5.148:8080/Blog/api/login.php";
+    public static String ROOT_URL = "http://192.168.1.104:8080";
+    public static String urlHome = ROOT_URL+"/Blog/api/article_list.php";
+    public static String urlLogin = ROOT_URL+"/Blog/api/login.php";
 }

@@ -11,32 +11,24 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_tool_bar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:toolbarId="@+id/toolbar"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-            app:layout_collapseMode="pin"
-            app:contentScrim="?attr/colorPrimary">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary" />
-        </android.support.design.widget.CollapsingToolbarLayout>
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="#60a8ef"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="#fff"
-                app:tabTextColor="#aaa" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="#60a8ef"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="#fff"
+            app:tabTextColor="#aaa" />
 
 
 

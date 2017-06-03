@@ -2,7 +2,6 @@ package com.answer.blog.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -141,9 +140,9 @@ public class MainActivity extends AppCompatActivity
 
     public void initLayout(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_tool_bar_main);
+//        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_tool_bar_main);
         setSupportActionBar(toolbar);
-        toolbarLayout.setTitle(getTitle());
+//        toolbarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
