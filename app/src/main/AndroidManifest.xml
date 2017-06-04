@@ -26,20 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.NewArticle">
-
-            <!-- 在这里实现toolbar的返回 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
         </activity>
         <activity
             android:name=".view.ArticleDetail"
-            android:theme="@style/ArticleDetail">
-
-            <!-- 在这里实现toolbar的返回 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
+            android:theme="@style/ArticleDetail" >
         </activity>
         <activity android:name=".view.LoginActivity"></activity>
     </application>

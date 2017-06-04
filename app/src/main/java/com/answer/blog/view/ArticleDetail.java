@@ -34,12 +34,12 @@ public class ArticleDetail extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Log.d("TAG","onBackPressed");
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        Log.d("TAG","onBackPressed");
+//        finish();
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,9 +49,14 @@ public class ArticleDetail extends AppCompatActivity {
                 Toast.makeText(this,"developing....",Toast.LENGTH_SHORT).show();
                 break;
             }
+            case android.R.id.home :{
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     /**
      * 初始化Toolbar

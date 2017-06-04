@@ -2,6 +2,7 @@ package com.answer.blog.util;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +30,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
             public boolean onSingleTapUp(MotionEvent e) {
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                 if (child != null && mListener != null) {
+                    Log.d("TAG","onSingleTapUp");
                     mListener.onItemClick(child, recyclerView.getChildAdapterPosition(child));
                 }
                 return true;
@@ -38,6 +40,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
             public void onLongPress(MotionEvent e) {
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                 if (child != null && mListener != null) {
+                    Log.d("TAG","onLongPress");
                     mListener.onItemLongClick(child, recyclerView.getChildAdapterPosition(child));
                 }
             }
@@ -49,18 +52,15 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         View childView = view.findChildViewUnder(e.getX(), e.getY());
         if (childView != null && mListener != null && gestureDetector.onTouchEvent(e)) {
-            mListener.onItemClick(childView, view.getChildAdapterPosition(childView));
+            Log.d("TAG","onInterceptTouchEvent");
+            //mListener.onItemClick(childView, view.getChildAdapterPosition(childView));
             return true;
         }
         return false;
     }
 
-    @Override public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {
-
-    }
+    @Override public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {}
 
     @Override
-    public void onRequestDisallowInterceptTouchEvent (boolean disallowIntercept){
-
-    }
+    public void onRequestDisallowInterceptTouchEvent (boolean disallowIntercept){}
 }
