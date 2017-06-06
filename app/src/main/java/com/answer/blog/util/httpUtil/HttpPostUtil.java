@@ -38,7 +38,6 @@ public class HttpPostUtil {
                         }catch (JSONException e){
                             Log.d("TAG",e.getMessage());
                         }
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -66,7 +65,7 @@ public class HttpPostUtil {
                 for (String s : response.headers.keySet()) {
                     if (s.contains("Set-Cookie")) {
                         String mCookie = response.headers.get(s);
-                        Log.d("TAG",mCookie);
+                        Log.d("TAG","loginPost parseNetworkResponse: "+mCookie);
                         MainActivity.user.setCookieId(mCookie);
                         break;
                     }
