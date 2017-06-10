@@ -150,14 +150,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
-                    case R.id.fab:{
-                        startActivity(new Intent(MainActivity.this,NewArticle.class));
-                        break;
-                    }
-                    default:
-                        break;
-                }
+                startActivity(new Intent(MainActivity.this,NewArticle.class));
             }
         });
 

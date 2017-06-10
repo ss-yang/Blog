@@ -5,11 +5,12 @@ package com.answer.blog;
  */
 
 public class BlogConst {
-    public static String ROOT_URL = "http://192.168.1.154:8080";
+    public static String ROOT_URL = "http://192.168.1.102:8080";
     public static String url_home = ROOT_URL+"/Blog/api/article_list.php";
     public static String url_login = ROOT_URL+"/Blog/api/login.php";
     public static String url_register = ROOT_URL+"/Blog/api/register.php";
     public static String url_my_article = ROOT_URL+"/Blog/api/myarticle_list.php";
     public static String url_new_article = ROOT_URL+"/Blog/api/add_article.php";
     public static String url_get_article_comment = ROOT_URL+"/Blog/api/get_article_comment.php";
+    public static String url_new_comment = ROOT_URL+"/Blog/api/new_comment.php";
 }

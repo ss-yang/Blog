@@ -112,4 +112,39 @@ public class HttpPostUtil {
         };
         MainActivity.mQueue.add(stringRequest);
     }
+
+    public static void newMessage(final String id, final String content){
+        StringRequest stringRequest= new StringRequest(Request.Method.POST, BlogConst.url_new_comment,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        try{
+                            JSONObject jsonObject = new JSONObject(s);
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", "error -> "+error.getMessage(), error);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("articleid", id);
+                params.put("editcontent", content);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www.form-urlencoded");
+                params.put("Cookie", MainActivity.user.getCookieId());
+                return params;
+            }
+        };
+        MainActivity.mQueue.add(stringRequest);
+    }
 }
