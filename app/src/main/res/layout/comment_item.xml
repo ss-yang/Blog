@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/iv_article"
+            android:id="@+id/iv_comment_avatar"
             android:layout_width="90dp"
             android:layout_height="90dp"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
@@ -34,8 +34,9 @@
                 android:text="author"
                 android:textStyle="bold"
                 android:textSize="14sp" />
+
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_comment_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_comment_author"
@@ -43,10 +44,8 @@
                 android:text="评论。。。"
                 android:textSize="14sp" />
 
-
-
             <TextView
-                android:id="@+id/tv_date"
+                android:id="@+id/tv_comment_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

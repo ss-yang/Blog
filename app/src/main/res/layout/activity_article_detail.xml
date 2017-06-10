@@ -48,6 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             tools:context="com.answer.blog.view.ArticleDetail">
 
             <android.support.v7.widget.AppCompatTextView
@@ -56,6 +57,12 @@
                 android:layout_height="match_parent"
                 android:layout_margin="18dp"
                 android:textSize="18sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

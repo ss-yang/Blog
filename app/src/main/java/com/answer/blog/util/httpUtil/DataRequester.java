@@ -12,6 +12,7 @@ import com.answer.blog.data.bean.EntityArticle;
 import com.answer.blog.view.MainActivity;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -22,6 +23,10 @@ import java.util.Map;
  */
 
 public class DataRequester {
+
+    public interface VolleyCallback {
+        void onSuccess(JSONObject result);
+    }
 
     public DataRequester(){}
 
@@ -44,7 +49,6 @@ public class DataRequester {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("TAG","error -> "+error.getMessage());
-                        //Toast.makeText(,"网络请求失败。",Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -55,15 +59,21 @@ public class DataRequester {
      * 请求我的文章列表
      */
     public static void requestMyArticleList(){
-        StringRequest jsonObjectRequest = new StringRequest(BlogConst.url_my_article, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(BlogConst.url_my_article, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("TAG","onResponse -> "+response);
-                EntityArticle entityArticle;
-                Gson gson = new Gson();
-                entityArticle = gson.fromJson(response, EntityArticle.class);
-                MainActivity.articleManager.setMyArticleList(entityArticle.getArticles());
-
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.get("code").toString().equals("200")){
+                        EntityArticle entityArticle;
+                        Gson gson = new Gson();
+                        entityArticle = gson.fromJson(response, EntityArticle.class);
+                        MainActivity.articleManager.setMyArticleList(entityArticle.getArticles());
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
             }},
                 new Response.ErrorListener(){
                     @Override
@@ -81,6 +91,36 @@ public class DataRequester {
                 return hashMap;
             }
         };
-        MainActivity.mQueue.add(jsonObjectRequest);
+        MainActivity.mQueue.add(stringRequest);
+    }
+
+    /**
+     * 请求文章评论列表
+     */
+    public static void requestArticleCommentList(String id, final VolleyCallback callback){
+        String url = BlogConst.url_get_article_comment + "?id=" + id; //构造请求url
+        Log.d("TAG","**** enter requestArticleCommentList!!!!!");
+        StringRequest commentRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG","onResponse comments -> "+response);
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    Log.d("TAG","**** enter onResponse in requestArticleCommentList!!!!!");
+                    if (jsonObject.get("code").toString().equals("200")){
+                        callback.onSuccess(jsonObject);
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }},
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("TAG","error -> "+error.getMessage());
+                    }
+                }
+        );
+        MainActivity.mQueue.add(commentRequest );
     }
 }
