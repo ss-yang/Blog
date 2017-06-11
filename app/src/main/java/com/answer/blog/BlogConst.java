@@ -13,4 +13,5 @@ public class BlogConst {
     public static String url_new_article = ROOT_URL+"/Blog/api/add_article.php";
     public static String url_get_article_comment = ROOT_URL+"/Blog/api/get_article_comment.php";
     public static String url_new_comment = ROOT_URL+"/Blog/api/new_comment.php";
+    public static String url_delete = ROOT_URL+"/Blog/api/delete.php";
 }

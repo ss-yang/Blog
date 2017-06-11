@@ -24,10 +24,6 @@ import java.util.Map;
 
 public class DataRequester {
 
-    public interface VolleyCallback {
-        void onSuccess(JSONObject result);
-    }
-
     public DataRequester(){}
 
     /**

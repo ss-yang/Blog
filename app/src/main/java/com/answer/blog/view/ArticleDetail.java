@@ -27,7 +27,9 @@ import com.answer.blog.data.bean.EntityComment;
 import com.answer.blog.util.CommentAdapter;
 import com.answer.blog.util.MessageManager;
 import com.answer.blog.util.httpUtil.DataRequester;
+import com.answer.blog.util.httpUtil.HttpGetUtil;
 import com.answer.blog.util.httpUtil.HttpPostUtil;
+import com.answer.blog.util.httpUtil.VolleyCallback;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -53,7 +55,8 @@ public class ArticleDetail extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.article_detail,menu);
+        if(MainActivity.user.isLogin())
+            getMenuInflater().inflate(R.menu.article_detail,menu);
         return true;
     }
 
@@ -61,8 +64,18 @@ public class ArticleDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.publish:{
-                Toast.makeText(this,"developing....",Toast.LENGTH_SHORT).show();
+            case R.id.article_detail_edit:{
+                Toast.makeText(this,"功能正在开发...",Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.article_detail_delete:{
+                HttpGetUtil.requestDeleteArticle("article", article.getId(), new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        //
+                        finish();
+                    }
+                });
                 break;
             }
             case android.R.id.home :{
@@ -71,8 +84,6 @@ public class ArticleDetail extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
     /**
      * 初始化Toolbar
@@ -140,7 +151,7 @@ public class ArticleDetail extends AppCompatActivity {
         toolbar.setTitle(article.getTitle());
         toolbar.setSubtitle(article.getAuthor()+"  "+article.getTime());
         messageManager = new MessageManager();
-        DataRequester.requestArticleCommentList(article.getId(), new DataRequester.VolleyCallback() {
+        DataRequester.requestArticleCommentList(article.getId(), new VolleyCallback() {
             @Override
             public void onSuccess(JSONObject result) {
                 EntityComment entityComment;

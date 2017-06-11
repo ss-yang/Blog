@@ -1,6 +1,7 @@
 package com.answer.blog.util;
 
 import com.answer.blog.data.bean.EntityArticle;
+import com.answer.blog.util.httpUtil.HttpGetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,15 @@ public class ArticleManager {
         articleList.clear();
         myArticleList = new ArrayList<>();
         myArticleList.clear();
-//        initTest();
     }
 
     public void add(EntityArticle.ArticleBean article){
         articleList.add(article);
     }
 
-    public void delete(int id){
-        articleList.remove(id);
+    public void delete(String id){
+        // 直接请求服务端删除再拉取服务端数据，还是请求服务端删除的同时删除list里面的 。。？
+
     }
 
     public List<EntityArticle.ArticleBean> getArticleList() {
