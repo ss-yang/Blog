@@ -150,7 +150,7 @@ public class ArticleDetail extends AppCompatActivity {
         content.setText(article.getContent());
         toolbar.setTitle(article.getTitle());
         toolbar.setSubtitle(article.getAuthor()+"  "+article.getTime());
-        messageManager = new MessageManager();
+        messageManager = new MessageManager<EntityComment.CommentBean>();
         DataRequester.requestArticleCommentList(article.getId(), new VolleyCallback() {
             @Override
             public void onSuccess(JSONObject result) {

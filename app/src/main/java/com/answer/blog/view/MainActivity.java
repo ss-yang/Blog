@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -154,6 +155,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -201,6 +203,22 @@ public class MainActivity extends AppCompatActivity
         tv_login_quit = (TextView)headerView.findViewById(R.id.tv_login_quit);
         tv_nickName = (TextView)headerView.findViewById(R.id.tv_nickname);
         setUserSpannable(tv_login_quit,tv_nickName);
+        setUserAvatarClickable();
+
+    }
+
+    private void setUserAvatarClickable(){
+        ImageView avatar =  (ImageView)headerView.findViewById(R.id.iv_avatar);
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MainActivity.user.isLogin()) {
+                    startActivity(new Intent(MainActivity.this, UserCenterActivity.class));
+                }else {
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                }
+            }
+        });
     }
 
     private void setUserSpannable(TextView tv_login_quit,TextView tv_nickName){

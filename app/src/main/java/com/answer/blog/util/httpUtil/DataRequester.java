@@ -116,4 +116,39 @@ public class DataRequester {
         );
         MainActivity.mQueue.add(commentRequest );
     }
+
+    /**
+     * 请求文章评论列表
+     */
+    public static void requestUserMessage(final VolleyCallback callback){
+        String url = BlogConst.url_message;
+        StringRequest commentRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.get("code").toString().equals("200")){
+                        callback.onSuccess(jsonObject);
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }},
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("TAG","error -> "+error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www.form-urlencoded");
+                params.put("Cookie", MainActivity.user.getCookieId());
+                return params;
+            }
+        };
+        MainActivity.mQueue.add(commentRequest );
+    }
 }
