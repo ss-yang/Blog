@@ -95,14 +95,11 @@ public class DataRequester {
      */
     public static void requestArticleCommentList(String id, final VolleyCallback callback){
         String url = BlogConst.url_get_article_comment + "?id=" + id; //构造请求url
-        Log.d("TAG","**** enter requestArticleCommentList!!!!!");
         StringRequest commentRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("TAG","onResponse comments -> "+response);
                 try{
                     JSONObject jsonObject = new JSONObject(response);
-                    Log.d("TAG","**** enter onResponse in requestArticleCommentList!!!!!");
                     if (jsonObject.get("code").toString().equals("200")){
                         callback.onSuccess(jsonObject);
                     }
