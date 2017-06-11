@@ -29,8 +29,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.answer.blog.R;
 import com.answer.blog.data.User;
+import com.answer.blog.data.bean.EntityArticle;
 import com.answer.blog.util.ArticleManager;
 import com.answer.blog.util.httpUtil.DataRequester;
+import com.answer.blog.util.httpUtil.VolleyCallback;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     // home tab view
     private TabLayout mTablayout;
     private ViewPager mViewpager;
+    private HomeFragment homeFragment;
+    private MyArticleFragment myArticleFragment;
     private String mTitles[] = {"首页","我的文章"};
 
     // nav header view
@@ -60,12 +68,21 @@ public class MainActivity extends AppCompatActivity
         articleManager = new ArticleManager();
         user = new User();
         user.setDefult();
-        DataRequester requester=new DataRequester();
-        requester.requestArticleList();
-
         initLayout();
         initUserView();
-        initTabView();
+
+        DataRequester.requestMyArticleList();
+        DataRequester.requestArticleList(new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                EntityArticle entityArticle;
+                Gson gson = new Gson();
+                entityArticle = gson.fromJson(response.toString(), EntityArticle.class);
+                MainActivity.articleManager.setArticleList(entityArticle.getArticles());
+                initTabView();
+            }
+        });
+
     }
 
 
@@ -74,7 +91,6 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         initUserView();
         initTabView();
-
     }
 
     @Override
@@ -172,6 +188,8 @@ public class MainActivity extends AppCompatActivity
         mTablayout = (TabLayout) findViewById(R.id.tablayout);
         mViewpager = (ViewPager) findViewById(R.id.viewpager);
 
+
+
         mViewpager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public int getCount() {
@@ -181,10 +199,13 @@ public class MainActivity extends AppCompatActivity
             @Override
             public Fragment getItem(int position) {
                 if (position == 0){
-                    return new HomeFragment();
+                    homeFragment = new HomeFragment();
+                    return homeFragment;
                 }
-                else if (position == 1)
-                    return new MyArticleFragment();
+                else if (position == 1) {
+                    myArticleFragment = new MyArticleFragment();
+                    return myArticleFragment;
+                }
                 return new HomeFragment();
             }
 
@@ -195,6 +216,22 @@ public class MainActivity extends AppCompatActivity
         });
 
         mTablayout.setupWithViewPager(mViewpager);
+        mTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(MainActivity.user.isLogin()) {
+                    myArticleFragment.initArticleList(myArticleFragment.getView());
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
     }
 
     private void initUserView(){

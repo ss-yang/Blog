@@ -29,17 +29,11 @@ public class DataRequester {
     /**
      * 请求首页文章列表
      */
-    public static void requestArticleList(){
+    public static void requestArticleList(final VolleyCallback callback){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(BlogConst.url_home, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("TAG","onResponse -> "+response.toString());
-
-                EntityArticle entityArticle;
-                Gson gson = new Gson();
-                entityArticle = gson.fromJson(response.toString(), EntityArticle.class);
-                MainActivity.articleManager.setArticleList(entityArticle.getArticles());
-
+                callback.onSuccess(response);
             }},
                 new Response.ErrorListener(){
                     @Override
@@ -58,7 +52,6 @@ public class DataRequester {
         StringRequest stringRequest = new StringRequest(BlogConst.url_my_article, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("TAG","onResponse -> "+response);
                 try{
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.get("code").toString().equals("200")){

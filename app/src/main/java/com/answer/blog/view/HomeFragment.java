@@ -18,6 +18,10 @@ import com.answer.blog.util.ArticleManager;
 import com.answer.blog.util.BaseFragment;
 import com.answer.blog.util.RecyclerItemClickListener;
 import com.answer.blog.util.httpUtil.DataRequester;
+import com.answer.blog.util.httpUtil.VolleyCallback;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 /**
  * Created by Answer on 2017/5/15.
@@ -36,7 +40,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         view = inflater.inflate(R.layout.content_main,container,false);
         initLayout(view);
         initArticleList(view);
-        Log.d("TAG","HomeFragment onCreate");
+        Log.d("TAG","HomeFragment onCreateView");
         return view;
     }
 
@@ -56,7 +60,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        Log.d("TAG","home onfresh");
         //refresh here
         new Thread(new Runnable() {
             @Override
@@ -64,15 +67,22 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 try{
                     Thread.sleep(1000);
                     // 网络请求
-                    DataRequester.requestArticleList();
-
+                    DataRequester.requestArticleList(new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONObject response) {
+                            EntityArticle entityArticle;
+                            Gson gson = new Gson();
+                            entityArticle = gson.fromJson(response.toString(), EntityArticle.class);
+                            MainActivity.articleManager.setArticleList(entityArticle.getArticles());
+                        }
+                    });
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //reload
+                        //reload data
                         initArticleList(view);
                         articleAdapter.notifyDataSetChanged();
                         refreshLayout.setRefreshing(false);
@@ -81,8 +91,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         }).start();
     }
-
-
 
     private void initLayout(View view){
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
@@ -117,5 +125,4 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     }
                 }));
     }
-
 }

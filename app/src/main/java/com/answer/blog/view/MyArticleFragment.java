@@ -36,7 +36,8 @@ public class MyArticleFragment extends BaseFragment implements SwipeRefreshLayou
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.mylist_content_main,container,false);
         initLayout(view);
-        Log.d("TAG","MyArticleFragment onCreate");
+        initArticleList(view);
+        Log.d("TAG","MyArticleFragment onCreateView");
         return view;
     }
 
@@ -55,12 +56,7 @@ public class MyArticleFragment extends BaseFragment implements SwipeRefreshLayou
             initLayout(view);
             initArticleList(view);
         }else {
-            Snackbar.make(view, "还没有登录哦~", Snackbar.LENGTH_LONG).setAction("登录", new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getActivity(),LoginActivity.class));
-                }
-            }).show();
+            remindLogin(view);
         }
     }
 
@@ -69,12 +65,7 @@ public class MyArticleFragment extends BaseFragment implements SwipeRefreshLayou
     public void onRefresh() {
         if(!MainActivity.user.isLogin()){
             refreshLayout.setRefreshing(false);
-            Snackbar.make(view, "还没有登录哦~", Snackbar.LENGTH_LONG).setAction("登录", new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getActivity(),LoginActivity.class));
-                }
-            }).show();
+            remindLogin(view);
             return;
         }
         //refresh here
@@ -99,10 +90,16 @@ public class MyArticleFragment extends BaseFragment implements SwipeRefreshLayou
                 });
             }
         }).start();
-        Log.d("TAG","MyArticleFragment onRefresh");
     }
 
-
+    public void remindLogin(View view){
+        Snackbar.make(view, "还没有登录哦~", Snackbar.LENGTH_LONG).setAction("登录", new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+            }
+        }).show();
+    }
 
     private void initLayout(View view){
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.mylist_swipe_refresh);
@@ -138,4 +135,9 @@ public class MyArticleFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
 
+    @Nullable
+    @Override
+    public View getView() {
+        return view;
+    }
 }

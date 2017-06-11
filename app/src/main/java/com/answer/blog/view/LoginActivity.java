@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.answer.blog.BlogConst;
 import com.answer.blog.R;
+import com.answer.blog.util.httpUtil.DataRequester;
 import com.answer.blog.util.httpUtil.HttpPostUtil;
 
 import org.json.JSONException;
@@ -174,6 +175,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (result.get("code").toString().equals("200")) {
                         MainActivity.user.setId(userId);
                         MainActivity.user.setLogin(true);
+                        DataRequester.requestMyArticleList();
                         finish();
                     }else {
                         mPasswordView.setError(result.get("message").toString());
