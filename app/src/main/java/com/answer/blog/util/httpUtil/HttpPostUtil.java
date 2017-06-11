@@ -113,13 +113,13 @@ public class HttpPostUtil {
         MainActivity.mQueue.add(stringRequest);
     }
 
-    public static void newMessage(final String id, final String content){
+    public static void newMessage(final String id, final String content, final com.answer.blog.util.httpUtil.VolleyCallback callback){
         StringRequest stringRequest= new StringRequest(Request.Method.POST, BlogConst.url_new_comment,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
                         try{
-                            JSONObject jsonObject = new JSONObject(s);
+                            callback.onSuccess(new JSONObject(s));
                         }catch (JSONException e){
                             e.printStackTrace();
                         }

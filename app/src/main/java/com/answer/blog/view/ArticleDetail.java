@@ -129,9 +129,23 @@ public class ArticleDetail extends AppCompatActivity {
                 .setPositiveButton("发送", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String content = editText.getText().toString();
-                        Log.d("TAG", "THIS IS " + editText.getText().toString());
-                        HttpPostUtil.newMessage(article.getId(), content);
+                        String content = editText.getText().toString(); // 获取到评论内容
+                        HttpPostUtil.newMessage(article.getId(), content, new VolleyCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) {
+                                // 插入评论成功，重新请求服务端的评论数据并显示
+                                DataRequester.requestArticleCommentList(article.getId(), new VolleyCallback() {
+                                    @Override
+                                    public void onSuccess(JSONObject result) {
+                                        EntityComment entityComment;
+                                        Gson gson = new Gson();
+                                        entityComment = gson.fromJson(result.toString(), EntityComment.class);
+                                        messageManager.setCommentsList(entityComment.getComments());// 存储数据
+                                        showComments();
+                                    }
+                                });
+                            }
+                        });
                     }
                 })
                 .create();
