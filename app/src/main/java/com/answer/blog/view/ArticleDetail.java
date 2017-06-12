@@ -162,7 +162,7 @@ public class ArticleDetail extends AppCompatActivity {
         AppCompatTextView content = (AppCompatTextView)findViewById(R.id.content_detail);
         ImageView img = (ImageView)findViewById(R.id.article_detail_image);//标题背景的图片
         Random random = new Random();
-        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(26) + 1));
+        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(35) + 1));
         img.setBackgroundResource(resId);
         article =  getIntent().getParcelableExtra("article_data");
         content.setText(article.getContent());

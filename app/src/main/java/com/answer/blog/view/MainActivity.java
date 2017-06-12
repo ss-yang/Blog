@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0); // 获取headerview对象
         Random random = new Random();
-        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(26) + 1)); // 获取随机背景图片id，文件名格式：bgx.png
+        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1)); // 获取随机背景图片id，文件名格式：bgx.png
         headerView.setBackgroundResource(resId);// 设置headerview的背景
         tv_login_quit = (TextView)headerView.findViewById(R.id.tv_login_quit);
         tv_nickName = (TextView)headerView.findViewById(R.id.tv_nickname);
