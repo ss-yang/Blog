@@ -3,6 +3,7 @@ package com.answer.blog.view;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -13,6 +14,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -23,19 +28,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.answer.blog.R;
 import com.answer.blog.data.User;
 import com.answer.blog.data.bean.EntityArticle;
+import com.answer.blog.util.ArticleAdapter;
 import com.answer.blog.util.ArticleManager;
+import com.answer.blog.util.RecyclerItemClickListener;
 import com.answer.blog.util.httpUtil.DataRequester;
+import com.answer.blog.util.httpUtil.HttpGetUtil;
 import com.answer.blog.util.httpUtil.VolleyCallback;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Random;
@@ -61,6 +73,11 @@ public class MainActivity extends AppCompatActivity
     private TextView tv_login_quit;
     private TextView tv_nickName;
 
+    // search result view
+    RecyclerView srRecyclerView;
+    CoordinatorLayout srLayout;
+    LinearLayout srLinearLayout;
+    CardView srCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +123,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if(srLinearLayout != null){
+            removeSearchResultView();
+        }else {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            }
         }
     }
 
@@ -118,6 +137,47 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //Toolbar的搜索框
+        MenuItem searchItem = menu.findItem(R.id.home_search);
+        SearchView searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //处理搜索结果，网络请求
+                HttpGetUtil.requestSearch(query, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        try {
+                            if(response.getString("message").equals("empty")){
+                                initSearchResult(true, 0);
+                            }else {
+                                EntityArticle entityArticle;
+                                Gson gson = new Gson();
+                                entityArticle = gson.fromJson(response.toString(), EntityArticle.class);
+                                ArticleManager temp = new ArticleManager();// 新建临时的ArticleManager
+                                temp.setArticleList(entityArticle.getArticles());
+                                initSearchResult(false, temp.getArticleList().size());
+                                initArticleList(srRecyclerView,temp);
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if(srLinearLayout != null) {
+                    removeSearchResultView();
+                    return true;
+                }
+                return false;
+            }
+        });
         return true;
     }
 
@@ -183,15 +243,90 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
+    /**
+     * 初始化搜索结果的界面。
+     * 界面包括4层,除CoordinatorLayout 外，都是动态创建：
+     * CoordinatorLayout srLayout
+     * --------LinearLayout srLinearLayout
+     * -----------------RecyclerView srRecyclerView
+     * --------------------------CardView srCardView
+     *
+     * @param empty
+     * @param size
+     */
+    private void initSearchResult(boolean empty, int size){
+        if(empty){
+            Toast.makeText(this, getString(R.string.search_result_empty), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // 动态创建用于显示搜索结果的RecyclerView，并添加到布局中
+        srRecyclerView = new RecyclerView(this);
+        srLayout = (CoordinatorLayout)findViewById(R.id.main_layout);
+
+        // 为了能调整RecyclerView的位置，加入linearLayout作为容器
+        srLinearLayout = new LinearLayout(this);
+        srLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(16,288,16,16);
+        srLinearLayout.setLayoutParams(params);
+
+        srCardView = new CardView(this);
+        srCardView.setRadius(20);
+        srCardView.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        srCardView.setPadding(12,12,12,12);
+        srCardView.setRadius(28);
+
+        Toast.makeText(this, "搜索到" + size + "条相关结果", Toast.LENGTH_SHORT).show();
+        // 显示结果：将控件加载到根布局srLayout中
+        srCardView.addView(srRecyclerView);
+        srLinearLayout.addView(srCardView);
+        srLayout.addView(srLinearLayout);
+    }
+
+    /**
+     * 删除动态创建的搜索结果界面
+     */
+    private void removeSearchResultView(){
+        srLayout.removeView(srRecyclerView);
+        srLayout.removeView(srCardView);
+        srLayout.removeView(srLinearLayout);
+    }
+
+    /**
+     * 动态创建搜索结果控件，并加载搜索结果
+     * @param articleManager
+     */
+    private void initArticleList(RecyclerView srRecyclerView, final ArticleManager articleManager){
+
+        ArticleAdapter articleAdapter;// 文章适配器
+        articleAdapter = new ArticleAdapter(articleManager.getArticleList());
+
+        srRecyclerView.setLayoutManager(new LinearLayoutManager(this));//线性
+        srRecyclerView.setAdapter(articleAdapter);
+        srRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, srRecyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this,ArticleDetail.class);
+                        EntityArticle.ArticleBean article = articleManager.getArticleList().get(position);
+                        intent.putExtra("article_data",article);
+                        Log.d("TAG","short click start article detail");
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        Log.d("TAG","long click start article detail");
+                    }
+                }));
     }
 
     private void initTabView() {
         mTablayout = (TabLayout) findViewById(R.id.tablayout);
         mViewpager = (ViewPager) findViewById(R.id.viewpager);
-
-
 
         mViewpager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -260,6 +395,9 @@ public class MainActivity extends AppCompatActivity
         return getResources().getIdentifier(name, "drawable", appInfo.packageName);
     }
 
+    /**
+     * 设置nav_header的头像为可点击
+     */
     private void setUserAvatarClickable(){
         ImageView avatar =  (ImageView)headerView.findViewById(R.id.iv_avatar);
         avatar.setOnClickListener(new View.OnClickListener() {
@@ -274,6 +412,11 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * 设置nav_header的“登录”和“退出登录”功能
+     * @param tv_login_quit
+     * @param tv_nickName
+     */
     private void setUserSpannable(TextView tv_login_quit,TextView tv_nickName){
         String login_quit = "登录";
         if(MainActivity.user.isLogin()){
@@ -313,10 +456,15 @@ public class MainActivity extends AppCompatActivity
         tv_nickName.setText(MainActivity.user.getId());
     }
 
+    /**
+     * 退出登录
+     */
     private void logout(){
         MainActivity.user.setDefult();
         Log.d("TAG","login -> "+MainActivity.user.isLogin());
         setUserSpannable(tv_login_quit,tv_nickName);
     }
+
+
 
 }

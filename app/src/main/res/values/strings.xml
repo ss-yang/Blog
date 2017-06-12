@@ -30,5 +30,7 @@
     <string name="error_password_required">密码不能为空！</string>
     <string name="error_userId_required">账号不能为空！</string>
 
+    <!--search result-->
+    <string name="search_result_empty">未搜索到相关信息...</string>
 
 </resources>
