@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="设置"
+    android:summary="aslkdfjasdklf">
+
+    <PreferenceCategory android:title="外观设置" >
+
+        <ListPreference android:title="更改主题"
+            android:summary="选择一个主题"
+            android:entries="@array/custom_theme"
+            android:entryValues="@array/custom_theme_value"/>
+
+        <CheckBoxPreference
+            android:key="night_mode"
+            android:title="夜间模式"
+            android:summaryOn="开"
+            android:summaryOff="关" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="其他">
+        <Preference
+            android:key="version_name"
+            android:summary="1.0"
+            android:title="版本" />
+        <Preference
+            android:key="about"
+            android:title="关于" />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_settings:{
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
             }
         }
@@ -210,6 +211,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_message) {
 
+        } else if (id == R.id.nav_settings){
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {

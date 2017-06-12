@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="custom_theme">
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+    </string-array>
+    <string-array name="custom_theme_value">
+        <item>001</item>
+        <item>002</item>
+        <item>003</item>
+    </string-array>
+</resources>

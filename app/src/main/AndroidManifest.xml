@@ -21,12 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.NewArticle"></activity>
+        <activity android:name=".view.NewArticle" />
         <activity
             android:name=".view.ArticleDetail"
-            android:theme="@style/ArticleDetail"></activity>
+            android:theme="@style/ArticleDetail" />
         <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.UserCenterActivity"></activity>
+        <activity android:name=".view.UserCenterActivity" />
+        <activity android:name=".view.SettingsActivity"
+            android:theme="@style/AppTheme.ActionBar"></activity>
     </application>
 
 </manifest>
