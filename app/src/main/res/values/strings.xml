@@ -13,7 +13,7 @@
 
     <!--nav-->
     <string name="home">首页</string>
-    <string name="category">分类</string>
+    <string name="category">我的文章</string>
     <string name="message">留言</string>
     <string name="share">分享</string>
     <string name="about">关于</string>
