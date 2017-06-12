@@ -1,6 +1,7 @@
 package com.answer.blog.view;
 
 import android.content.DialogInterface;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -35,6 +36,7 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Random;
 
 public class ArticleDetail extends AppCompatActivity {
 
@@ -112,7 +114,7 @@ public class ArticleDetail extends AppCompatActivity {
         });
     }
 
-    /**
+    /**·
      * 创建inputDialog、显示，并发送请求（提交评论）
      */
     private void inputDialog() {
@@ -160,6 +162,9 @@ public class ArticleDetail extends AppCompatActivity {
     private void showArticle(){
         AppCompatTextView content = (AppCompatTextView)findViewById(R.id.content_detail);
         ImageView img = (ImageView)findViewById(R.id.app_bar_image);//标题背景的图片
+        Random random = new Random();
+        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(26) + 1));
+        img.setBackgroundResource(resId);
         article =  getIntent().getParcelableExtra("article_data");
         content.setText(article.getContent());
         toolbar.setTitle(article.getTitle());
@@ -190,6 +195,17 @@ public class ArticleDetail extends AppCompatActivity {
             recyclerViewComment.setLayoutManager(new LinearLayoutManager(this));//线性
             recyclerViewComment.setAdapter(commentAdapter);
         }
+    }
+
+    /**
+     * 通过文件名获取resource id
+     * @param name 资源文件名
+     * @return
+     */
+    public int getResIdByName(String name)
+    {
+        ApplicationInfo appInfo = getApplicationInfo();
+        return getResources().getIdentifier(name, "drawable", appInfo.packageName);
     }
 
     public MessageManager getMessageManager() {

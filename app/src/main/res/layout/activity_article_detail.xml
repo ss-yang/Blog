@@ -26,8 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                android:src="@android:drawable/sym_def_app_icon"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitCenter" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_article_detail"

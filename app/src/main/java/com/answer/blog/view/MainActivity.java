@@ -1,6 +1,7 @@
 package com.answer.blog.view;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -36,6 +37,8 @@ import com.answer.blog.util.httpUtil.VolleyCallback;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
+
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity
@@ -236,12 +239,25 @@ public class MainActivity extends AppCompatActivity
 
     private void initUserView(){
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        headerView = navigationView.getHeaderView(0);
+        headerView = navigationView.getHeaderView(0); // 获取headerview对象
+        Random random = new Random();
+        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(26) + 1)); // 获取随机背景图片id，文件名格式：bgx.png
+        headerView.setBackgroundResource(resId);// 设置headerview的背景
         tv_login_quit = (TextView)headerView.findViewById(R.id.tv_login_quit);
         tv_nickName = (TextView)headerView.findViewById(R.id.tv_nickname);
         setUserSpannable(tv_login_quit,tv_nickName);
         setUserAvatarClickable();
+    }
 
+    /**
+     * 通过文件名获取resource id
+     * @param name 资源文件名
+     * @return
+     */
+    public int getResIdByName(String name)
+    {
+        ApplicationInfo appInfo = getApplicationInfo();
+        return getResources().getIdentifier(name, "drawable", appInfo.packageName);
     }
 
     private void setUserAvatarClickable(){
