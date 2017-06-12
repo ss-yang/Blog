@@ -6,7 +6,10 @@
 
     <string name="action_settings">设置</string>
 
-    <string name="titlt_comment">我来说两句</string>
+    <!--article detail-->
+    <string name="have_comments">最新评论</string>
+    <string name="none_comments">暂无评论，赶快评论吧！</string>
+    <string name="title_comment_dialog">我来说两句</string>
 
     <!--nav-->
     <string name="home">首页</string>

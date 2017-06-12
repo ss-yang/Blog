@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.answer.blog.R;
@@ -125,7 +127,7 @@ public class ArticleDetail extends AppCompatActivity {
         editText.setFocusable(true);
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.titlt_comment))
+                .setTitle(getString(R.string.title_comment_dialog))
                 .setView(inflator)
                 .setPositiveButton("发送", new DialogInterface.OnClickListener() {
                     @Override
@@ -162,7 +164,7 @@ public class ArticleDetail extends AppCompatActivity {
         AppCompatTextView content = (AppCompatTextView)findViewById(R.id.content_detail);
         ImageView img = (ImageView)findViewById(R.id.article_detail_image);//标题背景的图片
         Random random = new Random();
-        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(35) + 1));
+        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1));
         img.setBackgroundResource(resId);
         article =  getIntent().getParcelableExtra("article_data");
         content.setText(article.getContent());
@@ -187,10 +189,13 @@ public class ArticleDetail extends AppCompatActivity {
     private void showComments(){
         recyclerViewComment = (RecyclerView)findViewById(R.id.recycle_view_comment);
         List<EntityComment.CommentBean> list = messageManager.getCommentsList();
+        TextView textView = (TextView)findViewById(R.id.tv_comment_hint);
+        textView.setText(R.string.none_comments);
         if(list.size() > 0) {
             commentAdapter = new CommentAdapter(list);
             recyclerViewComment.setLayoutManager(new LinearLayoutManager(this));//线性
             recyclerViewComment.setAdapter(commentAdapter);
+            textView.setText(R.string.have_comments);
         }
     }
 
