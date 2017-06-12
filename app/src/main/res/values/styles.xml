@@ -22,5 +22,4 @@
         <item name="android:textSize">10sp</item>
     </style>
 
-    <style name="ArticleDetail" parent="AppTheme"></style>
 </resources>

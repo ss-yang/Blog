@@ -11,7 +11,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -161,14 +160,14 @@ public class ArticleDetail extends AppCompatActivity {
      */
     private void showArticle(){
         AppCompatTextView content = (AppCompatTextView)findViewById(R.id.content_detail);
-        ImageView img = (ImageView)findViewById(R.id.app_bar_image);//标题背景的图片
+        ImageView img = (ImageView)findViewById(R.id.article_detail_image);//标题背景的图片
         Random random = new Random();
         int resId = getResIdByName("bg" + String.valueOf(random.nextInt(26) + 1));
         img.setBackgroundResource(resId);
         article =  getIntent().getParcelableExtra("article_data");
         content.setText(article.getContent());
         toolbar.setTitle(article.getTitle());
-        toolbar.setSubtitle(article.getAuthor()+"  "+article.getTime());
+        toolbar.setSubtitle(article.getAuthor()+" - "+article.getTime());
         messageManager = new MessageManager<EntityComment.CommentBean>();
         DataRequester.requestArticleCommentList(article.getId(), new VolleyCallback() {
             @Override
@@ -180,8 +179,6 @@ public class ArticleDetail extends AppCompatActivity {
                 showComments();
             }
         });
-        Log.d("TAG","---msg: "+messageManager.getCommentsList().size());
-//        showComments();
     }
 
     /**
