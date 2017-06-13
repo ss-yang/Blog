@@ -27,8 +27,10 @@
             android:theme="@style/ArticleDetail" />
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.UserCenterActivity" />
-        <activity android:name=".view.SettingsActivity"
-            android:theme="@style/AppTheme.ActionBar"></activity>
+        <activity
+            android:name=".view.SettingsActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+        <activity android:name=".view.AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {
-
+            startActivity(new Intent(MainActivity.this, AboutActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -230,10 +230,11 @@ public class MainActivity extends AppCompatActivity
 //        toolbarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,NewArticle.class));
+                startActivity(new Intent(MainActivity.this, NewArticle.class));
             }
         });
 
@@ -273,7 +274,7 @@ public class MainActivity extends AppCompatActivity
         srLinearLayout = new LinearLayout(this);
         srLinearLayout.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(16,288,16,16);
+        params.setMargins(16,316,16,16);
         srLinearLayout.setLayoutParams(params);
 
         srCardView = new CardView(this);

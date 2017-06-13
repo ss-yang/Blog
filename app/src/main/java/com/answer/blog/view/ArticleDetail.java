@@ -2,16 +2,18 @@ package com.answer.blog.view;
 
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -166,6 +168,8 @@ public class ArticleDetail extends AppCompatActivity {
         Random random = new Random();
         int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1));
         img.setBackgroundResource(resId);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
+        setPalette(bitmap);
         article =  getIntent().getParcelableExtra("article_data");
         content.setText(article.getContent());
         toolbar.setTitle(article.getTitle());
@@ -181,6 +185,12 @@ public class ArticleDetail extends AppCompatActivity {
                 showComments();
             }
         });
+    }
+
+    private void setPalette(Bitmap bm){
+        Palette palette = Palette.generate(bm);
+        Palette.Swatch s = palette.getVibrantSwatch();
+//        toolbar.setBackgroundColor(s.getRgb());
     }
 
     /**
