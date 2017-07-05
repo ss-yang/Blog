@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:fitsSystemWindows="true"
-        android:layout_height="192dp"
+        android:layout_height="@dimen/appbar_height"
         android:layout_width="match_parent" >
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -23,11 +23,10 @@
             app:contentScrim="?attr/colorPrimary">
 
             <ImageView
-                android:id="@+id/app_bar_image"
+                android:id="@+id/usr_center_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                android:src="@android:drawable/sym_def_app_icon"
                 android:scaleType="centerCrop" />
 
             <ImageView

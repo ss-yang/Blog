@@ -1,5 +1,6 @@
 package com.answer.blog.view;
 
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.answer.blog.R;
@@ -24,10 +26,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Random;
 
 public class UserCenterActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private ImageView background, avatar;
+
     private MessageManager messageManager;
 
     private RecyclerView recyclerViewMsg;
@@ -37,28 +42,17 @@ public class UserCenterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_center);
-        initToolbar();
+        initView();
         initMessage();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-//        if(MainActivity.user.isLogin())
-//            getMenuInflater().inflate(R.menu.usr_center,menu);
-        return true;
+    private void initView() {
+        initToolbar();
+        background = (ImageView)findViewById(R.id.usr_center_bg);
+        Random random = new Random();
+        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1));
+        background.setBackgroundResource(resId);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case android.R.id.home :{
-                finish();
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
 
     /**
      * 初始化Toolbar
@@ -123,6 +117,30 @@ public class UserCenterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 通过文件名获取resource id
+     * @param name 资源文件名
+     * @return
+     */
+    public int getResIdByName(String name)
+    {
+        ApplicationInfo appInfo = getApplicationInfo();
+        return getResources().getIdentifier(name, "drawable", appInfo.packageName);
+    }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case android.R.id.home :{
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }
