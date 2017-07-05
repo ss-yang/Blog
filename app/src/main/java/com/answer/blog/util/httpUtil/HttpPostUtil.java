@@ -76,8 +76,14 @@ public class HttpPostUtil {
         MainActivity.mQueue.add(stringRequest);
     }
 
-    public static void newArticle(final String title, final String content){
-        StringRequest stringRequest= new StringRequest(Request.Method.POST, BlogConst.url_new_article,
+    public static void newArticle(final String title, final String content, boolean isEdit, String id){
+        String url = null;
+        if(isEdit){
+            url = BlogConst.url_edit + "?table=article&sender=newarticle&id="+id;
+        }else {
+            url = BlogConst.url_new_article;
+        }
+        StringRequest stringRequest= new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {

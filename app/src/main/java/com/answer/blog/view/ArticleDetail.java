@@ -1,6 +1,7 @@
 package com.answer.blog.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,7 +24,6 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.answer.blog.R;
 import com.answer.blog.data.bean.EntityArticle;
@@ -70,7 +70,9 @@ public class ArticleDetail extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.article_detail_edit:{
-                Toast.makeText(this,"功能正在开发...",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ArticleDetail.this, NewArticle.class);
+                intent.putExtra("article_edit", article);
+                startActivity(intent);
                 break;
             }
             case R.id.article_detail_delete:{

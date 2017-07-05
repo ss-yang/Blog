@@ -37,6 +37,9 @@ public class NewArticle extends AppCompatActivity {
     private WindowManager wm;
     private WindowManager.LayoutParams wmlay;
 
+    private boolean isEdit; // 判断是编辑文章还是发布新文章。
+    private EntityArticle.ArticleBean article;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,15 @@ public class NewArticle extends AppCompatActivity {
         initToolbar();
         title = (TextInputEditText)findViewById(R.id.new_title);
         content = (TextInputEditText)findViewById(R.id.new_content);
+        isEdit = false;
+
+        // 编辑文章时，加载从文章详情页面传来的文章数据
+        article =  getIntent().getParcelableExtra("article_edit");
+        if(article != null) {
+            title.setText(article.getTitle());
+            content.setText(article.getContent());
+            isEdit = true;
+        }
 
         // MarkDown的tip 悬浮窗需要权限。 SDK23以上需要弹出设置界面让用户自己选择，23以前的只需要在manifest里面加权限即可。
         if (Build.VERSION.SDK_INT >= 23) {
@@ -77,27 +89,31 @@ public class NewArticle extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.publish:{
-                HttpPostUtil.newArticle(title.getText().toString(), content.getText().toString());
+                // newArticle函数会根据isEdit来判断是更新文章还是插入文章。
+                if(isEdit) {
+                    HttpPostUtil.newArticle(title.getText().toString(), content.getText().toString(), isEdit, article.getId()); // api要求传入要更新的文章的id
+                }else {
+                    HttpPostUtil.newArticle(title.getText().toString(), content.getText().toString(), isEdit, ""); // 新发布文章不需要传入id
+                }
                 this.finish();
                 break;
             }
             case R.id.preview:{
                 Intent intent = new Intent(NewArticle.this, ArticleDetail.class);
-                EntityArticle.ArticleBean article = new EntityArticle.ArticleBean();
-                article.setTitle(title.getText().toString());
-                article.setTime("");
-                article.setContent(content.getText().toString());
-                article.setAuthor("");
-                article.setId("preview"); //预览时ArticleDetail根据这个值判断来源。
-                article.setLastTime("");
-                intent.putExtra("article_data",article);
+                EntityArticle.ArticleBean preview = new EntityArticle.ArticleBean(); // 将正在编辑的文章发送到markdown预览界面
+                preview.setTitle(title.getText().toString());
+                preview.setTime("");
+                preview.setContent(content.getText().toString());
+                preview.setAuthor("");
+                preview.setId("preview"); //预览时ArticleDetail根据这个值判断来源。
+                preview.setLastTime("");
+                intent.putExtra("article_data", preview);// 将正在编辑的文章发送到markdown预览界面
                 startActivity(intent);
                 break;
             }
             case R.id.md_tips:{
                 // 弹出MD简单教程
                 showMDTips();
-
                 break;
             }
             case android.R.id.home :{
