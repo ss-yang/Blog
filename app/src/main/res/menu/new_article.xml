@@ -15,7 +15,7 @@
 
     <item
         android:id="@+id/md_tips"
-        android:title="MarkDown Tips"
+        android:title="MarkDown教程"
         app:showAsAction="never" />
 
 
