@@ -27,8 +27,8 @@ public class EntityArticle {
         return articles;
     }
 
-    public void setArticles(List<ArticleBean> article) {
-        this.articles = article;
+    public void setArticles(List<ArticleBean> articles) {
+        this.articles = articles;
     }
 
     public static class ArticleBean implements Parcelable {
@@ -84,8 +84,6 @@ public class EntityArticle {
                 return new EntityArticle.ArticleBean[size];
             }
         };
-
-
 
         public String getId() {
             return id;

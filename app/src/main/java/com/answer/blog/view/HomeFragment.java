@@ -115,7 +115,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         Intent intent = new Intent(getActivity(),ArticleDetail.class);
                         EntityArticle.ArticleBean article = articleManager.getArticleList().get(position);
                         intent.putExtra("article_data",article);
-                        Log.d("TAG","short click start article detail");
                         startActivity(intent);
                     }
 
