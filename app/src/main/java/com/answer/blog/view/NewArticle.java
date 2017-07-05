@@ -1,5 +1,6 @@
 package com.answer.blog.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.answer.blog.R;
+import com.answer.blog.data.bean.EntityArticle;
 import com.answer.blog.util.httpUtil.HttpPostUtil;
 
 public class NewArticle extends AppCompatActivity {
@@ -37,6 +39,23 @@ public class NewArticle extends AppCompatActivity {
             case R.id.publish:{
                 HttpPostUtil.newArticle(title.getText().toString(), content.getText().toString());
                 this.finish();
+                break;
+            }
+            case R.id.preview:{
+                Intent intent = new Intent(NewArticle.this, ArticleDetail.class);
+                EntityArticle.ArticleBean article = new EntityArticle.ArticleBean();
+                article.setTitle(title.getText().toString());
+                article.setTime("");
+                article.setContent(content.getText().toString());
+                article.setAuthor("");
+                article.setId("preview"); //预览时ArticleDetail根据这个值判断来源。
+                article.setLastTime("");
+                intent.putExtra("article_data",article);
+                startActivity(intent);
+                break;
+            }
+            case R.id.md_tips:{
+                // 弹出MD简单教程
                 break;
             }
             case android.R.id.home :{

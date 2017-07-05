@@ -35,6 +35,7 @@ import com.answer.blog.util.httpUtil.HttpGetUtil;
 import com.answer.blog.util.httpUtil.HttpPostUtil;
 import com.answer.blog.util.httpUtil.VolleyCallback;
 import com.google.gson.Gson;
+import com.zzhoujay.richtext.RichText;
 
 import org.json.JSONObject;
 
@@ -55,7 +56,6 @@ public class ArticleDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
         initToolbar();
-        initFloatButton();
         showArticle();
     }
 
@@ -171,9 +171,12 @@ public class ArticleDetail extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
         setPalette(bitmap);
         article =  getIntent().getParcelableExtra("article_data");
-        content.setText(article.getContent());
+        RichText.fromMarkdown(article.getContent()).into(content); // 调用RichText控件解析markdown
         toolbar.setTitle(article.getTitle());
         toolbar.setSubtitle(article.getAuthor()+" - "+article.getTime());
+        if(!article.getId().equals("preview")) {
+            initFloatButton();
+        }
         messageManager = new MessageManager<EntityComment.CommentBean>();
         DataRequester.requestArticleCommentList(article.getId(), new VolleyCallback() {
             @Override

@@ -5,11 +5,18 @@
     <item
         android:id="@+id/preview"
         android:title="预览"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_preview"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/publish"
         android:icon="@drawable/ic_publish"
         android:title="发布"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/md_tips"
+        android:title="MarkDown Tips"
+        app:showAsAction="never" />
+
 
 </menu>

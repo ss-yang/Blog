@@ -13,5 +13,6 @@
 
     <!--发布文章-->
     <item name="ic_publish" type="drawable">@drawable/ic_send</item>
+    <item name="ic_preview" type="drawable">@drawable/ic_previewer_eye</item>
 
 </resources>
