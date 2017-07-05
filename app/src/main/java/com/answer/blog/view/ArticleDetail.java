@@ -60,7 +60,7 @@ public class ArticleDetail extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
-        if(MainActivity.user.isLogin())
+        if(MainActivity.user.isLogin() && article.getAuthor().equals(MainActivity.user.getId()))
             getMenuInflater().inflate(R.menu.article_detail,menu);
         return true;
     }
