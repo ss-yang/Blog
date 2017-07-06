@@ -209,11 +209,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_category) {
-
+            mViewpager.setCurrentItem(0);
+        } else if (id == R.id.nav_my_article) {
+            mViewpager.setCurrentItem(1);
         } else if (id == R.id.nav_message) {
-
+            if(MainActivity.user.isLogin()) {
+                startActivity(new Intent(MainActivity.this, UserCenterActivity.class));
+            }else {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            }
         } else if (id == R.id.nav_settings){
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         } else if (id == R.id.nav_share) {
