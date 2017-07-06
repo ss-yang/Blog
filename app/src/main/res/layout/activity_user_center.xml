@@ -82,10 +82,10 @@
 
                         <ImageView
                             android:id="@+id/iv_user_article"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_marginRight="20dp"
-                            android:src="@android:drawable/sym_def_app_icon" />
+                            android:src="@drawable/ic_signature" />
 
                         <TextView
                             android:id="@+id/tv_usr_center_article"
@@ -114,10 +114,10 @@
 
                         <ImageView
                             android:id="@+id/iv_user_msg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_marginRight="20dp"
-                            android:src="@android:drawable/sym_def_app_icon" />
+                            android:src="@drawable/ic_chatting" />
 
                         <TextView
                             android:id="@+id/tv_usr_center_msg"
