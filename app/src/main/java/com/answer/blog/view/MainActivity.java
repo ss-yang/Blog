@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     public static ArticleManager articleManager;
     public static User user;
     public static RequestQueue mQueue;
+    public static int RANDOM;
 
     // home tab view
     private TabLayout mTablayout;
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity
         user.setDefult();
         initLayout();
         initUserView();
+        Random random = new Random();
+        RANDOM = random.nextInt(34) + 1;
 
         DataRequester.requestArticleList(new VolleyCallback() {
             @Override
@@ -386,8 +389,7 @@ public class MainActivity extends AppCompatActivity
     private void initUserView(){
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0); // 获取headerview对象
-        Random random = new Random();
-        int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1)); // 获取随机背景图片id，文件名格式：bgx.png
+        int resId = getResIdByName("bg" + String.valueOf(RANDOM)); // 获取随机背景图片id，文件名格式：bgx.png
         headerView.setBackgroundResource(resId);// 设置headerview的背景
         tv_login_quit = (TextView)headerView.findViewById(R.id.tv_login_quit);
         tv_nickName = (TextView)headerView.findViewById(R.id.tv_nickname);
