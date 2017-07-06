@@ -2,6 +2,7 @@ package com.answer.blog.view;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -66,7 +67,10 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
         Random random = new Random();
         int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1));
         background.setBackgroundResource(resId);
-
+        Bitmap bmpAvatar = MainActivity.user.getAvatar();
+        if(bmpAvatar != null) {
+            avatar.setImageBitmap(bmpAvatar);
+        }
         btnEdit = (Button)findViewById(R.id.btn_user_center_edit);
         btnEdit.setOnClickListener(this);
     }

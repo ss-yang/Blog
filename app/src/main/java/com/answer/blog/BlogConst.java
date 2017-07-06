@@ -5,7 +5,7 @@ package com.answer.blog;
  */
 
 public class BlogConst {
-    public static String ROOT_URL = "http://192.168.5.117:8080";
+    public static String ROOT_URL = "http://192.168.43.19:8080";
     public static String url_home = ROOT_URL+"/Blog/api/article_list.php";
     public static String url_login = ROOT_URL+"/Blog/api/login.php";
     public static String url_register = ROOT_URL+"/Blog/api/register.php";
@@ -17,4 +17,5 @@ public class BlogConst {
     public static String url_message = ROOT_URL+"/Blog/api/message.php";
     public static String url_search = ROOT_URL+"/Blog/api/search.php";
     public static String url_edit = ROOT_URL+"/Blog/api/edit.php";
+    public static String url_upload_avatar= ROOT_URL+"/Blog/api/upload_avatar.php";
 }

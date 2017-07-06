@@ -1,5 +1,7 @@
 package com.answer.blog.data;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Answer on 2017/5/16.
  * 当前登录用户的用户信息
@@ -13,6 +15,8 @@ public class User {
     private String email;
     private String regTime;
     private String cookieId;
+    private String avatarPath;
+    private Bitmap avatar;
     private boolean login;
 
 
@@ -73,6 +77,22 @@ public class User {
 
     public void setRegTime(String regTime) {
         this.regTime = regTime;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public Bitmap getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Bitmap avatar) {
+        this.avatar = avatar;
     }
 
     public String getCookieId() {

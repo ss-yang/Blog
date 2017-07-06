@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity
     private View headerView;
     private TextView tv_login_quit;
     private TextView tv_nickName;
+    private ImageView avatar;
 
     // search result view
     RecyclerView srRecyclerView;
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity
         initLayout();
         initUserView();
 
-        DataRequester.requestMyArticleList();
         DataRequester.requestArticleList(new VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -383,6 +383,7 @@ public class MainActivity extends AppCompatActivity
         headerView.setBackgroundResource(resId);// 设置headerview的背景
         tv_login_quit = (TextView)headerView.findViewById(R.id.tv_login_quit);
         tv_nickName = (TextView)headerView.findViewById(R.id.tv_nickname);
+        avatar = (ImageView) headerView.findViewById(R.id.iv_avatar);
         setUserSpannable(tv_login_quit,tv_nickName);
         setUserAvatarClickable();
     }

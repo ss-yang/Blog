@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -49,6 +50,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSignUp.setOnClickListener(this);
         mProgressView = findViewById(R.id.login_progress);
         mLoginFormView = findViewById(R.id.login_form);
+
+        //DEBUG
+        mUserIdView.setText("admin");
+        mPasswordView.setText("admin");
 
     }
 
@@ -175,6 +180,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (result.get("code").toString().equals("200")) {
                         MainActivity.user.setId(userId);
                         MainActivity.user.setLogin(true);
+                        MainActivity.user.setAvatarPath(result.get("data").toString());
+                        Log.d("TAG","LOGIN:"+MainActivity.user.getAvatarPath());
                         DataRequester.requestMyArticleList();
                         finish();
                     }else {
