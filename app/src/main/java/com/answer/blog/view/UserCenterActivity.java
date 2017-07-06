@@ -1,5 +1,6 @@
 package com.answer.blog.view;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,10 +30,11 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Random;
 
-public class UserCenterActivity extends AppCompatActivity {
+public class UserCenterActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar toolbar;
     private ImageView background, avatar;
+    private Button btnEdit;
 
     private MessageManager messageManager;
 
@@ -46,12 +49,26 @@ public class UserCenterActivity extends AppCompatActivity {
         initMessage();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_user_center_edit:{
+                Intent intent = new Intent(UserCenterActivity.this,UserInfoEditActivity.class);
+                startActivity(intent);
+                break;
+            }
+        }
+    }
+
     private void initView() {
         initToolbar();
         background = (ImageView)findViewById(R.id.usr_center_bg);
         Random random = new Random();
         int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1));
         background.setBackgroundResource(resId);
+
+        btnEdit = (Button)findViewById(R.id.btn_user_center_edit);
+        btnEdit.setOnClickListener(this);
     }
 
     /**

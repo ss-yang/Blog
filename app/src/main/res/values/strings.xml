@@ -33,4 +33,12 @@
     <!--search result-->
     <string name="search_result_empty">未搜索到相关信息...</string>
 
+    <!--user center-->
+    <string name="user_center_edit">修改信息</string>
+    <string name="user_center_article">我的博客</string>
+    <string name="user_center_message">我的留言</string>
+
+    <!--user info edit-->
+    <string name="user_info_avatar">修改头像</string>
+
 </resources>

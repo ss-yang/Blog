@@ -3,7 +3,7 @@
     package="com.answer.blog">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--允许悬浮窗口-->
+    <!-- 允许悬浮窗口 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -32,7 +32,8 @@
         <activity
             android:name=".view.SettingsActivity"
             android:theme="@style/AppTheme.ActionBar" />
-        <activity android:name=".view.AboutActivity"></activity>
+        <activity android:name=".view.AboutActivity" />
+        <activity android:name=".view.UserInfoEditActivity"></activity>
     </application>
 
 </manifest>
