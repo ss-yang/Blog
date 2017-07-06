@@ -35,7 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.answer.blog.BlogConst;
 import com.answer.blog.R;
 import com.answer.blog.data.User;
 import com.answer.blog.data.bean.EntityArticle;
@@ -44,6 +46,7 @@ import com.answer.blog.util.ArticleManager;
 import com.answer.blog.util.RecyclerItemClickListener;
 import com.answer.blog.util.httpUtil.DataRequester;
 import com.answer.blog.util.httpUtil.HttpGetUtil;
+import com.answer.blog.util.httpUtil.ImageDownload;
 import com.answer.blog.util.httpUtil.VolleyCallback;
 import com.google.gson.Gson;
 
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         initUserView();
         initTabView();
+        updateAvatar();
     }
 
     @Override
@@ -397,6 +401,16 @@ public class MainActivity extends AppCompatActivity
     {
         ApplicationInfo appInfo = getApplicationInfo();
         return getResources().getIdentifier(name, "drawable", appInfo.packageName);
+    }
+
+    /**
+     * 更新头像
+     */
+    private void updateAvatar(){
+        if(user.isLogin()) {
+            ImageLoader.ImageListener listener = ImageLoader.getImageListener(avatar, android.R.drawable.sym_def_app_icon, android.R.drawable.sym_def_app_icon);
+            ImageDownload.imageLoader.get(BlogConst.ROOT_URL + user.getAvatarPath(), listener);
+        }
     }
 
     /**

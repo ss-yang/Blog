@@ -1,5 +1,7 @@
 package com.answer.blog.util.httpUtil;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONObject;
 
 /**

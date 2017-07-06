@@ -20,8 +20,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.answer.blog.BlogConst;
 import com.answer.blog.R;
+import com.answer.blog.util.httpUtil.ImageDownload;
 import com.answer.blog.util.httpUtil.UploadImageApacheHttp;
 
 import java.io.IOException;
@@ -154,6 +156,8 @@ public class UserInfoEditActivity extends AppCompatActivity implements View.OnCl
         btnChangeAvatar.setOnClickListener(this);
         btnChangeAvatar.setText(SELECT_IMAGE);
         avatar = (ImageView)findViewById(R.id.iv_userinfo_edit_avatar);
+        ImageLoader.ImageListener listener = ImageLoader.getImageListener(avatar, android.R.drawable.sym_def_app_icon, android.R.drawable.sym_def_app_icon);
+        ImageDownload.imageLoader.get(BlogConst.ROOT_URL + MainActivity.user.getAvatarPath(), listener);
     }
 
     /**

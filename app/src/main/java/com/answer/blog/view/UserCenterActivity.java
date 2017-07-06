@@ -2,7 +2,6 @@ package com.answer.blog.view;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +15,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.answer.blog.BlogConst;
 import com.answer.blog.R;
 import com.answer.blog.data.bean.EntityArticle;
 import com.answer.blog.data.bean.EntityMessage;
 import com.answer.blog.util.MessageAdapter;
 import com.answer.blog.util.MessageManager;
 import com.answer.blog.util.httpUtil.DataRequester;
+import com.answer.blog.util.httpUtil.ImageDownload;
 import com.answer.blog.util.httpUtil.VolleyCallback;
 import com.google.gson.Gson;
 
@@ -67,10 +69,9 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
         Random random = new Random();
         int resId = getResIdByName("bg" + String.valueOf(random.nextInt(34) + 1));
         background.setBackgroundResource(resId);
-        Bitmap bmpAvatar = MainActivity.user.getAvatar();
-        if(bmpAvatar != null) {
-            avatar.setImageBitmap(bmpAvatar);
-        }
+        avatar = (ImageView)findViewById(R.id.usr_center_avatar);
+        ImageLoader.ImageListener listener = ImageLoader.getImageListener(avatar, android.R.drawable.sym_def_app_icon, android.R.drawable.sym_def_app_icon);
+        ImageDownload.imageLoader.get(BlogConst.ROOT_URL + MainActivity.user.getAvatarPath(), listener);
         btnEdit = (Button)findViewById(R.id.btn_user_center_edit);
         btnEdit.setOnClickListener(this);
     }
