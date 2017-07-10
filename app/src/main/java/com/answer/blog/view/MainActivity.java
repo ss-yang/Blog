@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -96,8 +97,9 @@ public class MainActivity extends AppCompatActivity
         initLayout();
         initUserView();
         Random random = new Random();
-        RANDOM = random.nextInt(34) + 1;
+        RANDOM = random.nextInt(34) + 1; // nav view 的随机背景图片资源id
 
+        // 请求首页列表
         DataRequester.requestArticleList(new VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -141,7 +143,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         //Toolbar的搜索框
         MenuItem searchItem = menu.findItem(R.id.home_search);
@@ -189,28 +190,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_settings:{
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_home) {
             mViewpager.setCurrentItem(0);
         } else if (id == R.id.nav_my_article) {
@@ -235,16 +228,24 @@ public class MainActivity extends AppCompatActivity
 
     public void initLayout(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_tool_bar_main);
         setSupportActionBar(toolbar);
-//        toolbarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NewArticle.class));
+                if(user.isLogin()) {
+                    startActivity(new Intent(MainActivity.this, NewArticle.class));
+                }else {
+//                    Toast.makeText(getApplicationContext(),"您还未登录，请先登录后才能发博客~",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getCurrentFocus(), "还没有登录哦~", Snackbar.LENGTH_LONG).setAction("登录", new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getApplication(),LoginActivity.class));
+                        }
+                    }).show();
+                }
             }
         });
 
